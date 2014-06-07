@@ -7,27 +7,55 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pNeditor.PNeditorDocTemplate;
+import pNeditor.PNeditorDocument;
+import pNeditor.PNeditorPlugin;
+import pNeditor.PNeditorView;
 import petriNetDomain.IFeature;
 import petriNetDomain.PNelement;
 import petriNetDomain.Place;
 import petriNetDomain.Transition;
 
+import FeatureFactories.PreemptiveTransitionFeatureFactory;
 import FeatureFactories.StochasticTransitionFeatureFactory;
-
+/**
+ * This class tests the basic functioning of the class {@link StochasticTransitionFeatureFactory}
+ * @author Michaela
+ *
+ */
 public class StochasticTransitionFeatureFactoryTest {
 
 	private static StochasticTransitionFeatureFactory testObj;
-	@Before
-	public void setUp() throws Exception {
+	private static PNeditorDocument doc;
+	private static PNeditorPlugin plugin;
+	/**
+	 * set up the main classes needed in order to create a document 
+	 * and add elements to it and perform operations on them
+	 *
+	 * and instantiate an instance of the object to test
+	 */
+	@BeforeClass
+	public static void setUp() throws Exception {
+		plugin = new PNeditorPlugin();
+		plugin.initClipboard();
+		doc = new PNeditorDocument();
+		PNeditorDocTemplate dt = new PNeditorDocTemplate(plugin);
+		doc.setDocTemplate(dt);
+		PNeditorView view = new PNeditorView();
+		view.setDocument(doc);
+		view.initializeView(null, doc);
+		
+	
 		testObj = new StochasticTransitionFeatureFactory();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		System.gc();
+	@AfterClass
+	public static void tearDown() throws Exception {
 	}
 
 	@Test
@@ -54,31 +82,31 @@ public class StochasticTransitionFeatureFactoryTest {
 
 	@Test
 	public void testIsDependent() {
-		String trueDependence = "Timed Transition";
-		String falseDependence = "Preemptive Transition";
+		
+		String falseDependence;
 		boolean actual;
-		actual = testObj.isDependent(trueDependence);
-		assertFalse(actual);
+		falseDependence = "Timed Transition";
 		actual = testObj.isDependent(falseDependence);
-		assertFalse(actual);	
+		assertFalse(actual);
+		falseDependence = "Preemptive Transition";				
+		actual = testObj.isDependent(falseDependence);
+		assertFalse(actual);
 	}
 
-//	@SuppressWarnings("null")
-//	@Test
-//	public void testIsAppliableToAll() {
-//		Collection<PNelement> elements = new ArrayList<PNelement>();
-//		Point p;
-//		p = new Point(0,0);
-//		PNelement transition1 = new Transition("transition1", p);
-//		elements.add(transition1);
-//		p = new Point(5,5);
-//		PNelement transition2 = new Transition("transition2", p);
-//		elements.add(transition2);
-//		assertTrue(testObj.isAppliableToAll(elements));
-//		p= new Point(10,10);
-//		PNelement place1 = new Place("place1", p);
-//		elements.add(place1);
-////		assertFalse(testObj.isAppliableToAll(elements));
-//	
-//	}
+	@Test
+	public void testIsAppliableToAll() {
+		
+		Collection<PNelement> elements = new ArrayList<PNelement>();
+		PNelement transition1 = new Transition("transition1", new Point(0,0));
+		elements.add(transition1);
+		PNelement transition2 = new Transition("transition2", new Point(10,10));
+		elements.add(transition2);
+		
+		assertTrue(testObj.isAppliableToAll(elements));
+		
+		PNelement place1 = new Place("place1", new Point(20,20));
+		elements.add(place1);
+		
+		assertFalse(testObj.isAppliableToAll(elements));
+	}
 }

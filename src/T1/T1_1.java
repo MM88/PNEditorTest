@@ -7,14 +7,20 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import pNeditor.FeaturesDockBar;
 import pnEditorApp.Main;
-
+/**
+ * When a document is created all the feature factory must be loaded  
+ *
+ * this hasn't been implemented because the refactoring needed to test the application 
+ * changed the way of loading factories
+ * @author Michaela
+ */
 public class T1_1 {
 
 	@BeforeClass
 	public static void setUp() throws Exception {
-		String [] args=null;
-		Main.main(args);
+		
 	}
 
 	@After
@@ -22,7 +28,7 @@ public class T1_1 {
 	}
 
 	@Test
-	public void test() {
+	public static void test() {
 		fail("Not yet implemented");
 	}
 

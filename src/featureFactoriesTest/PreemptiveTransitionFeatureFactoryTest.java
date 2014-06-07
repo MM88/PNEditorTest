@@ -14,24 +14,46 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
+import static org.mockito.Mockito.*;
+
+import framework.FApplication;
+import framework.FDocument;
+import framework.exception.ApplicationException;
+
 import FeatureFactories.PreemptiveTransitionFeatureFactory;
 
+import pNeditor.ElementListDockBar;
 import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import pNeditor.PNeditorView;
+import pNeditor.PropertiesDockBar;
 import petriNetDomain.*;
+import pnEditorApp.PNeditorApplication;
 
-
+/**
+ * This class tests the basic functioning of the class {@link PreemptiveTransitionFeatureFactory}
+ * @author Michaela
+ *
+ */
 public class PreemptiveTransitionFeatureFactoryTest {
 
 	private static PreemptiveTransitionFeatureFactory testObj;
+	private static PNeditorDocument doc;
+	private static PNeditorPlugin plugin;
+	/**
+	 * set up the main classes needed in order to create a document 
+	 * and add elements to it and perform operations on them
+	 *
+	 * and instantiate an instance of the object to test
+	 */
 	@BeforeClass
 	public static void setUp() throws Exception {		
-		PNeditorPlugin plugin = new PNeditorPlugin();
+			
+		plugin = new PNeditorPlugin();
 		plugin.initClipboard();
-		PNeditorDocument doc = new PNeditorDocument();
-		assertNotNull(doc);
+		doc = new PNeditorDocument();
 		PNeditorDocTemplate dt = new PNeditorDocTemplate(plugin);
 		doc.setDocTemplate(dt);
 		PNeditorView view = new PNeditorView();
@@ -43,9 +65,8 @@ public class PreemptiveTransitionFeatureFactoryTest {
 
 	@AfterClass
 	public static void tearDown() throws Exception {
-		System.gc();
 	}
-
+	
 	@Test
 	public void testGetName() {
 	
@@ -53,25 +74,34 @@ public class PreemptiveTransitionFeatureFactoryTest {
 		assertEquals(testObj.getName(), actualName);
 	}
 
-//  problema perche passa da FApplication.getActivedocument
+
 //	@Test
-//	public void testCreateFeature() {
+//	public void testCreateFeature() throws ApplicationException {
+//	
+//		PNeditorApplication app = mock(PNeditorApplication.class);
+//		when(app.getActiveDocument()).thenReturn(doc);
 //		
-//		IFeature f=testObj.createFeature();
-//		assertNotNull(f);
+//		Transition t1= new Transition("transition1", new Point(0,0));
+//		doc.addTransitionToPetriNet(t1, null);
+//		doc.getSelectionModel().select(t1, true);
+//		
+//		t1.addFeature(new PreemptiveTransitionFeature(app));
+//		
+//		assertNotNull(t1.getFeature("Preemptive Transition"));
 //	}
+
 
 	@Test
 	public void testGetDependencies() {
 		String [] actualDependencies = {"Timed Transition"};
 		assertArrayEquals(testObj.getDependencies(), actualDependencies);
 	}
-//
+
 	@Test
 	public void testHasDependencies() {
 		assertTrue(testObj.hasDependencies());
 	}
-//
+	
 	@Test
 	public void testIsDependent() {
 		String trueDependence = "Timed Transition";
@@ -82,8 +112,7 @@ public class PreemptiveTransitionFeatureFactoryTest {
 		actual = testObj.isDependent(falseDependence);
 		assertFalse(actual);		
 	}
-	
-	@SuppressWarnings("null")
+
 	@Test
 	public void testIsAppliableToAll() {	
 		
