@@ -21,6 +21,7 @@ import pNeditor.PropertiesDockBar;
 import petriNetDomain.IFeatureProperty;
 import petriNetDomain.IFeaturizable;
 import petriNetDomain.PNelement;
+import petriNetDomain.PreemptiveTransitionFeature;
 import petriNetDomain.TimedTransitionFeature;
 import petriNetDomain.Transition;
 import pnEditorApp.PNeditorApplication;
@@ -156,6 +157,60 @@ public class T2_5 {
 		}
 		 assertEquals(t2.getName(), "transition2");
 		 
+		 doc.getSelectionModel().clearSelection();
+		 
+		 //try to give to LFT a string value
+		 
+		 t2.addFeature(new TimedTransitionFeature(app));
+		 doc.getSelectionModel().select(t2, true);
+		 pDock.activate(doc);
+		 pDock.createSheet();
+		 
+		 properties = pDock.getSheet().getProperties();			
+		
+		for (int i=0; i<properties.length;i++){
+			if (properties[i].getDisplayName().equalsIgnoreCase("LFT")){
+				properties[i].setValue("ten");
+			}
+		}
+		
+		expected = 0;
+	    actual = 10; 	    
+	   
+		for ( IFeatureProperty p : t2.getFeature("Timed Transition").getProperties() ){ 
+			if (p.getDisplayName().equalsIgnoreCase("LFT")){
+			actual = (Double) p.readValue();}
+		}
+		
+		assertEquals(expected, actual, DELTA);
+		 
+		 doc.getSelectionModel().clearSelection();
+		 
+		 //try to add a resource that already exists
+		 
+		 doc.addResource("cpu");
+	  	 t1.addFeature(new PreemptiveTransitionFeature(app));
+	     doc.getSelectionModel().select(t1, true);
+		 pDock.activate(doc);
+		 pDock.createSheet();
+		 properties = pDock.getSheet().getProperties();
+			
+		 for (int i=0; i<properties.length;i++){
+			if (properties[i].getDisplayName().equalsIgnoreCase("Add Resource")){
+				properties[i].setValue("cpu");
+			}
+		 }
+
+		expected = 1;
+		actual = 0;
+		for (String r: doc.getResources())
+			if (r.equalsIgnoreCase("cpu"))
+				actual++;
+				
+		assertEquals(expected, actual,DELTA);
+	    
+		doc.getSelectionModel().clearSelection();
+	
 	}
 
 }

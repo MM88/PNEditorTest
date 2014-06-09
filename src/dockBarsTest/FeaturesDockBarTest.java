@@ -71,17 +71,19 @@ public class FeaturesDockBarTest {
 	 * the list of feature applicable to the element selected
 	 * 
 	 * and if an element has a feature the corresponding factory must appear checked
+	 * 
+	 * then its tested if the dockbar works when a checkbox is checked/unchecked
 	 */
 	@Test
 	public void test() {
 		
 		Transition t1 = new Transition("transition1", new Point(0,0));
-		
+		IContentProvider actuals;
 		doc.addTransitionToPetriNet(t1, null);
 		doc.getSelectionModel().select(t1,true);
 		testObj.activate(doc);
 		ArrayList<IFeatureFactory> expecteds = plugin.getFeatureFactory();		
-		IContentProvider actuals = testObj.getViewer().getContentProvider();
+		actuals = testObj.getViewer().getContentProvider();
 	
 		for (int i=0; i<actuals.getChildrenCount(doc); i++){
 			assertEquals(actuals.getChild(doc, i).getClass(), expecteds.get(i).getClass());		
@@ -97,7 +99,34 @@ public class FeaturesDockBarTest {
 			{
 				assertTrue(testObj.getViewer().isElementChecked(actuals.getChild(doc,i)));
 			}
-		} 
+		}
+		
+		doc.getSelectionModel().clearSelection();
+		
+		//if a checkbox is selected the dockbar must create the corresoinding feature and stay checked
+		
+		Transition t2 = new Transition("transition2", new Point(10,10));
+		doc.addTransitionToPetriNet(t2, null);
+		doc.getSelectionModel().select(t2, true);
+		
+		testObj.activate(doc);
+		actuals = testObj.getViewer().getContentProvider();
+		for (int i=0; i<actuals.getChildrenCount(doc); i++){
+			if ( actuals.getChild(doc,i).getClass().equals(TimedTransitionFeatureFactory.class))
+			{
+				try{
+				testObj.getViewer().setElementChecked(actuals.getChild(doc,i), true);}
+				catch(NullPointerException e){}
+			}
+		}
+		assertTrue(t2.hasFeature("Timed Transition"));
+		actuals = testObj.getViewer().getContentProvider();
+		for (int i=0; i<actuals.getChildrenCount(doc); i++){
+			if ( actuals.getChild(doc,i).getClass().equals(TimedTransitionFeatureFactory.class))
+			{
+				assertTrue(testObj.getViewer().isElementChecked(actuals.getChild(doc,i)));
+			}
+		}
 	}
 
 }

@@ -23,6 +23,7 @@ import pNeditor.PropertiesDockBar;
 import petriNetDomain.IFeatureProperty;
 import petriNetDomain.IFeaturizable;
 import petriNetDomain.PNelement;
+import petriNetDomain.PreemptiveTransitionFeature;
 import petriNetDomain.TimedTransitionFeature;
 import petriNetDomain.Transition;
 import pnEditorApp.PNeditorApplication;
@@ -95,7 +96,22 @@ public class T2_3 {
 		}
 		
 	   assertEquals(expected, actual, DELTA);
+	   doc.getSelectionModel().clearSelection();
 	   
+	   //try to add a new resource with the property AddResource of a preemtive transition feature
+	   
+	   t1.addFeature(new PreemptiveTransitionFeature(app));
+	   doc.getSelectionModel().select(t1, true);
+		pDock.activate(doc);
+		pDock.createSheet();
+		properties = pDock.getSheet().getProperties();
+			
+		for (int i=0; i<properties.length;i++){
+			if (properties[i].getDisplayName().equalsIgnoreCase("Add Resource")){
+				properties[i].setValue("cpu");
+			}
+		}
+		assertTrue(doc.getResources().contains("cpu"));
 		
 	}
 

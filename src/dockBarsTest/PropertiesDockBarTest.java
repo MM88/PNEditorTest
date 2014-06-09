@@ -1,6 +1,8 @@
 package dockBarsTest;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import petriNetDomain.PreemptiveTransitionFeature;
 import petriNetDomain.StochasticTransitionFeature;
 import petriNetDomain.TimedTransitionFeature;
 import petriNetDomain.Transition;
+import pnEditorApp.PNeditorApplication;
 
 /**
  * This class tests the basic functioning of the class {@link PropertiesDockBar}
@@ -72,6 +75,7 @@ public class PropertiesDockBarTest {
 	 * the basic functioning being tested is whether the properties list contains the general
 	 * property and the features properties if present 
 	 * 
+	 * then its done a stress test based on the number of element in the net
 	 */
 	@Test
 	public void test() {
@@ -119,6 +123,62 @@ public class PropertiesDockBarTest {
 		}
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));		
+		doc.getSelectionModel().clearSelection();
+		
+		//with a preemptive feature
+		
+		PNeditorApplication app = mock(PNeditorApplication.class);
+		when(app.getActiveDocument()).thenReturn(doc);	
+		expecteds.clear();
+		actuals.clear();
+		doc.addResource("cpu");
+		Transition t2 = new Transition("transition2", new Point(10,10));
+		t2.addFeature(new PreemptiveTransitionFeature(app));
+		expecteds.add("name");
+		for (IFeature f: t2.getFeatures()){
+			for (IFeatureProperty fp: f.getProperties() ){
+				expecteds.add(fp.getDisplayName());
+			}
+		}	
+
+		doc.getSelectionModel().select(t2,true);
+		testObj.activate(doc);
+		testObj.createSheet();	
+		
+		 properties = testObj.getSheet().getProperties();
+			
+		for (int i=0; i<properties.length;i++){
+			actuals.add(properties[i].getDisplayName());
+		}
+		assertEquals(expecteds.size(), actuals.size());
+		assertTrue(actuals.containsAll(expecteds));		
+		doc.getSelectionModel().clearSelection();
+		
+		//stress test
+		
+		expecteds.clear();
+		actuals.clear();
+		for (int i=0; i<150; i++){
+			Transition t = new Transition("t"+i, new Point (i,i));
+			t.addFeature(new TimedTransitionFeature(null));
+			expecteds.add("name");
+			doc.addTransitionToPetriNet(t, null);		
+			doc.getSelectionModel().select(t, true);
+		}
+		expecteds.add("EFT");
+		expecteds.add("LFT");
+		testObj.activate(doc);
+		testObj.createSheet();
+		
+		properties = testObj.getSheet().getProperties();
+		
+		for (int i=0; i<properties.length;i++){
+			actuals.add(properties[i].getDisplayName());
+		}
+		
+		assertEquals(expecteds.size(), actuals.size());
+		assertTrue(actuals.containsAll(expecteds));	
+		doc.getSelectionModel().clearSelection();
 	}
 
 }
