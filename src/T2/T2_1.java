@@ -90,7 +90,6 @@ public class T2_1 {
 		 properties = pDock.getSheet().getProperties();
 			
 			for (int i=0; i<properties.length;i++){
-				System.out.print(properties[i].getDisplayName());
 				actuals.add(properties[i].getDisplayName());
 			}
 			assertEquals(expecteds.size(), actuals.size());
@@ -116,7 +115,6 @@ public class T2_1 {
 		 properties = pDock.getSheet().getProperties();
 			
 			for (int i=0; i<properties.length;i++){
-				System.out.print(properties[i].getDisplayName());
 				actuals.add(properties[i].getDisplayName());
 			}
 			
@@ -139,7 +137,6 @@ public class T2_1 {
 		properties = pDock.getSheet().getProperties();
 		
 		for (int i=0; i<properties.length;i++){
-			System.out.print(properties[i].getDisplayName());
 			actuals.add(properties[i].getDisplayName());
 			
 		}

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,135 +15,88 @@ import FeatureFactories.PreemptiveTransitionFeatureFactory;
 import FeatureFactories.StochasticTransitionFeatureFactory;
 import FeatureFactories.TimedTransitionFeatureFactory;
 
-import framework.tool.viewer.IContentProvider;
-import pNeditor.FeaturesDockBar;
 import pNeditor.IFeatureFactory;
 import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import pNeditor.PNeditorView;
-
-import petriNetDomain.Place;
-import petriNetDomain.TimedTransitionFeature;
+import petriNetDomain.IFeature;
+import petriNetDomain.PreemptiveTransitionFeature;
 import petriNetDomain.Transition;
-
+import pnEditorApp.PNeditorApplication;
+import static org.mockito.Mockito.*;
 /**
- * when an element of the list is selected the features dockbar must show all and only
- *  the features that can be applied to that element
+ * The creation process must create if necessary all the dependencies of the feature selected
  * @author Michaela
  */
 public class T1_2 {
-	
-	private static FeaturesDockBar fDock;
+
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
 	/**
 	 * set up the main classes needed in order to create a document 
 	 * and add elements to it and perform operations on them
-	 *
-	 * and instantiate an instance of the object to test
 	 */
 	@BeforeClass
-	public static void setUp() throws Exception {		
+	public static void setUp() throws Exception {
 		
 		plugin = new PNeditorPlugin();
 		plugin.initClipboard();
-	    doc = new PNeditorDocument();
+		doc = new PNeditorDocument();
 		PNeditorDocTemplate dt = new PNeditorDocTemplate(plugin);
 		doc.setDocTemplate(dt);
-		//serve per inizializzare la roba che serve per creare i posti
 		PNeditorView view = new PNeditorView();
 		view.setDocument(doc);
 		view.initializeView(null, doc);
-		
-		fDock = new FeaturesDockBar(plugin.getFeatureFactory());
 	}
 
 	@AfterClass
-	public static void tearDown() {
-    }
-
+	public static void tearDown() throws Exception {
+	}
 
 	@Test
 	public void test() {
-
-		ArrayList<IFeatureFactory> expecteds = new ArrayList<IFeatureFactory>();
-		ArrayList<IFeatureFactory> actuals = new ArrayList<IFeatureFactory>();
-		IContentProvider cp;
-		Transition t1 = new Transition("transition1", new Point(0,0));	
+	
+		//first method: with a mock of the Preemptive feature I check if after the creation process the Timed has been created
+		ArrayList<IFeatureFactory> factories = new ArrayList<IFeatureFactory>();
+		String[] dependencies = {"Timed Transition"};
+		
+		PreemptiveTransitionFeatureFactory ptff = mock(PreemptiveTransitionFeatureFactory.class);
+		PreemptiveTransitionFeature ptf = mock(PreemptiveTransitionFeature.class);
+		
+		TimedTransitionFeatureFactory ttff = new TimedTransitionFeatureFactory();
+		StochasticTransitionFeatureFactory stff = new StochasticTransitionFeatureFactory();
+		
+		factories.add(stff);
+		factories.add(ttff);
+		factories.add(ptff);
+		
+		when(ptff.createFeature()).thenReturn(ptf);
+		when(ptff.getName()).thenReturn("Preemptive Transition");
+		when(ptff.getDependencies()).thenReturn(dependencies);
+		when(ptff.hasDependencies()).thenReturn(true);
+		when(ptf.getName()).thenReturn("Preemptive Transition");
+		
+		Transition t1 = new Transition("transition1", new Point(0,0));
 		doc.addTransitionToPetriNet(t1, null);
-		
-		//check it gives all the factories if the element is a Tansition without features
-			
-	
-		doc.getSelectionModel().select(t1,true);
-		fDock.activate(doc);
-		
-		expecteds = plugin.getFeatureFactory();	
-		
-		cp = fDock.getViewer().getContentProvider();	
-		for (int i=0; i<cp.getChildrenCount(doc); i++){
-			if (!(fDock.getViewer().isElementChecked(cp.getChild(doc, i)))){
-					actuals.add((IFeatureFactory) cp.getChild(doc, i));
-			}
-		} 
-		
-		assertEquals(expecteds.size(), actuals.size());
-		assertTrue(actuals.containsAll(expecteds));			
-		
-		doc.getSelectionModel().clearSelection();
-	
-		expecteds.clear();
-		actuals.clear();
-		
-		//check it gives only Stochastic and Preemptive if the element is a Tansition with Timed feature
-		
-		t1.addFeature(new TimedTransitionFeature(null));
-		doc.getSelectionModel().select(t1,true);
-		fDock.activate(doc);		
-	
-		for (IFeatureFactory ff: plugin.getFeatureFactory()){
-			if (!(ff instanceof TimedTransitionFeatureFactory)){
-				expecteds.add(ff);				
-			}
-		}
-		
-		cp = fDock.getViewer().getContentProvider();	
-		for (int i=0; i<cp.getChildrenCount(doc); i++){
-			if (!(fDock.getViewer().isElementChecked(cp.getChild(doc, i)))){
-					actuals.add((IFeatureFactory) cp.getChild(doc, i));
-			}
-		} 
-		
-		assertEquals(expecteds.size(), actuals.size());
-		assertTrue(actuals.containsAll(expecteds));	
-		
-		doc.getSelectionModel().clearSelection();
-		expecteds.clear();
-		actuals.clear();
-		
-		//check that doesnt gives factories if the element selected is a place
-		
-		Place p1 = new Place("place1", new Point(50,50));	
-		doc.addPlaceToPetriNet(p1, null);
-		doc.getSelectionModel().select(p1, true);
 		doc.getSelectionModel().select(t1, true);
-		fDock.activate(doc);		
+		doc.createFeature(ptff, factories, t1, null);
 		
-		cp = fDock.getViewer().getContentProvider();	
-		for (int i=0; i<cp.getChildrenCount(doc); i++){
-			if (!(fDock.getViewer().isElementChecked(cp.getChild(doc, i)))){
-					actuals.add((IFeatureFactory) cp.getChild(doc, i));
-			}
-		} 
-		
-		
-		assertEquals(expecteds.isEmpty(), actuals.isEmpty());
-		
+		assertTrue(t1.hasFeature("Timed Transition"));
 		doc.getSelectionModel().clearSelection();
 		
+		//second method: mock the application and not the Preemptive feature, but need some refactoring
+		PNeditorApplication app = mock(PNeditorApplication.class);
+		when(app.getActiveDocument()).thenReturn(doc);
+		IFeature f= new PreemptiveTransitionFeature(app);
+		when(ptff.createFeature()).thenReturn(f);
 		
+		Transition t2 = new Transition("transition2", new Point(10,10));
+		doc.addTransitionToPetriNet(t2, null);
+		doc.getSelectionModel().select(t2, true);
+		doc.createFeature(ptff, factories, t2, null);
 		
+		assertTrue(t2.hasFeature("Timed Transition"));
 	}
 
 }
