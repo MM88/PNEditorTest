@@ -1,56 +1,53 @@
 package undo_redoTest;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import FeatureFactories.PreemptiveTransitionFeatureFactory;
+import FeatureFactories.StochasticTransitionFeatureFactory;
+import FeatureFactories.TimedTransitionFeatureFactory;
 
 import framework.undoredo.HistoryComposite;
 import framework.undoredo.HistoryException;
 import framework.undoredo.IHistoryComposite;
 
+import pNeditor.IFeatureFactory;
 import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import petriNetDomain.IFeature;
 import petriNetDomain.PNelement;
+import petriNetDomain.PreemptiveTransitionFeature;
 import petriNetDomain.TimedTransitionFeature;
 import petriNetDomain.Transition;
+import pnEditorApp.PNeditorApplication;
 
 
 public class UndoRedoFeatureTest {
 
 	private static PNeditorPlugin myPlugin;
 	private static PNeditorDocument myDoc;
+	private static PNeditorApplication mockedApp;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+
+	@Before
+	public void setUp() throws Exception {
 		myPlugin = new PNeditorPlugin();
 		myPlugin.initClipboard();
 		myDoc = new PNeditorDocument();
 		assertNotNull(myDoc);
 		PNeditorDocTemplate dt = new PNeditorDocTemplate(myPlugin);
 		myDoc.setDocTemplate(dt);
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		mockedApp = Mockito.mock(PNeditorApplication.class);	
+		Mockito.when(mockedApp.getActiveDocument()).thenReturn(myDoc);	
 	}
 	
 	
@@ -73,6 +70,53 @@ public class UndoRedoFeatureTest {
 		}
 		Set<IFeature> actualFeatures = t.getFeatures();
 		assertEquals(expectedFeatures.size(), actualFeatures.size());
+	}
+	
+	@Test
+	public void testUndoRedoCreationOnePreemtiveFeature() {
+		Point position = new Point (0,0);
+		Transition t = new Transition("transition0",
+				position);
+		Set<IFeature> expectedFeatures = t.getFeatures();
+		assertEquals(expectedFeatures.size(), 0);
+		myDoc.getSelectionModel().select(t, true);
+		IFeature myPree = new PreemptiveTransitionFeature(mockedApp);	
+		ArrayList<IFeatureFactory> factories = new ArrayList<IFeatureFactory>();
+		IFeatureFactory ptff = mock(PreemptiveTransitionFeatureFactory.class);
+		when(ptff.createFeature()).thenReturn(myPree);
+		IFeatureFactory ttff = new TimedTransitionFeatureFactory();
+		IFeatureFactory stff = new StochasticTransitionFeatureFactory();
+		factories.add(stff);
+		factories.add(ttff);
+		factories.add(ptff);
+		String[] dependencies = {"Timed Transition"};
+		when(ptff.getName()).thenReturn("Preemptive Transition");
+		when(ptff.getDependencies()).thenReturn(dependencies);
+		when(ptff.hasDependencies()).thenReturn(true);
+		IHistoryComposite hc = new HistoryComposite("crea");
+		myDoc.createFeature(ptff, factories, t, hc);
+		myDoc.getHistoryManager().addMemento(hc);
+		Set<IFeature> transitionFeatures = t.getFeatures();
+		assertEquals(transitionFeatures.size(), 2);
+		IFeature timed = t.getFeature("Timed Transition");
+		assertNotNull(timed);
+		IFeature pree = t.getFeature("Preemptive Transition");
+		assertNotNull(pree);
+		try {
+			myDoc.getHistoryManager().undo(null);
+		} catch (HistoryException e) {
+			e.printStackTrace();
+		}
+		Set<IFeature> actualFeatures = t.getFeatures();
+		assertEquals(expectedFeatures.size(), actualFeatures.size());
+		// redo test
+		try {
+			myDoc.getHistoryManager().redo(null);
+		} catch (HistoryException e) {
+			e.printStackTrace();
+		}
+		actualFeatures = t.getFeatures();
+		assertEquals(transitionFeatures.size(), actualFeatures.size());
 	}
 	
 	@Test
