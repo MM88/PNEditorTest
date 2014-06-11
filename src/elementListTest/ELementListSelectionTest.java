@@ -7,7 +7,6 @@ import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 
@@ -21,17 +20,22 @@ import pNeditor.PNeditorView;
 import petriNetDomain.PNelement;
 import petriNetDomain.Place;
 import petriNetDomain.Transition;
-import pnEditorApp.PNeditorApplication;
+
+/**
+ * This class tests that:
+ *  when one (or more) element is selected in the document it appears selected on the element list and viceversa;
+ *  when an element is removed from the document it is removed from the element list;
+ *  when the name of an element is changed on the document it changes on the element list as well.
+ * @author Benedetta
+ *
+ */
 
 public class ELementListSelectionTest {
 
 	private static ElementListDockBar myEldock = null;
 	private static PNeditorDocument myDoc;
 	private static PNeditorPlugin myPlugin;
-	
-	/**
-	
-	 */
+
 	@Before
 	public void setUp() throws Exception {
 		
@@ -47,7 +51,7 @@ public class ELementListSelectionTest {
 	}
 	
 	@Test
-	public void selectionDocElDockTest(){
+	public void selectionDocTest(){
 		Point p = new Point(0,0);
 		Place place = new Place("place0", p);
 		Point p0 = new Point(10,10);
@@ -64,7 +68,7 @@ public class ELementListSelectionTest {
 		int selectedEl = myEldock.getViewer().getSelectedValues().length;
 		assertEquals(1, selectedEl);
 		assertEquals(Transition.class,myEldock.getViewer().getSelectedValue().getClass());
-		//piu transizioni
+		//more elements 
 		Point p1 = new Point(20,20);
 		Transition t1 = new Transition("transizion1", p1);
 		myDoc.addTransitionToPetriNet(t1, null);
@@ -80,7 +84,7 @@ public class ELementListSelectionTest {
 	}
 	
 	@Test
-	public void selectionElDockDocTest(){
+	public void selectionDockTest(){
 		Point p = new Point(0,0);
 		Place place = new Place("place0", p);
 		Point p0 = new Point(10,10);
@@ -121,11 +125,23 @@ public class ELementListSelectionTest {
 		assertEquals(Place.class, child.getClass());
 	}
 	
-	
-	
-	
-	
-
+	@Test
+	public void changeNameTest(){
+		Point p = new Point(0,0);
+		Place place = new Place("place0", p);
+		myDoc.addPlaceToPetriNet(place, null);
+		myDoc.getSelectionModel().select(place, true);
+		myEldock.activate(myDoc);
+		myEldock.updateView(myDoc, null);
+		myEldock.getSelectionListener().valueChanged(null);
+		Place elPlace = (Place) myEldock.getViewer().getSelectedValue();
+		assertEquals("place0", elPlace.getName());
+		myDoc.rename(null, place, "place0", "p", null);
+		myEldock.updateView(myDoc, null);
+		myEldock.getSelectionListener().valueChanged(null);
+		elPlace = (Place) myEldock.getViewer().getSelectedValue();
+		assertEquals("p", elPlace.getName());
+	}
 	
 
 }

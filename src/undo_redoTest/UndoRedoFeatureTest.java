@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Set;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -30,6 +31,13 @@ import petriNetDomain.TimedTransitionFeature;
 import petriNetDomain.Transition;
 import pnEditorApp.PNeditorApplication;
 
+/**
+ * This class tests that:
+ *  the removal of a feature is undoable
+ *  if the removal of a feature is undone it must be redoable
+ * @author Benedetta
+ *
+ */
 
 public class UndoRedoFeatureTest {
 
@@ -52,7 +60,7 @@ public class UndoRedoFeatureTest {
 	
 	
 	@Test
-	public void testUndoCreationOneTimedFeature() {
+	public void testUndoRedoCreationOneTimedFeature() {
 		Point position = new Point (0,0);
 		Transition t = new Transition(new String("transition0"),
 				position);
@@ -62,14 +70,22 @@ public class UndoRedoFeatureTest {
 		myDoc.addFeatureToNode(ft, t, myDoc.getHistoryManager());
 		Set<IFeature> transitionFeatures = t.getFeatures();
 		assertEquals(transitionFeatures.size(), 1);
+		//undoTest
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Set<IFeature> actualFeatures = t.getFeatures();
 		assertEquals(expectedFeatures.size(), actualFeatures.size());
+		//redoTest
+		try {
+			myDoc.getHistoryManager().redo(null);
+		} catch (HistoryException e) {
+			e.printStackTrace();
+		}
+		actualFeatures = t.getFeatures();
+		assertEquals(transitionFeatures.size(), actualFeatures.size());
 	}
 	
 	@Test
@@ -102,6 +118,7 @@ public class UndoRedoFeatureTest {
 		assertNotNull(timed);
 		IFeature pree = t.getFeature("Preemptive Transition");
 		assertNotNull(pree);
+		//undoTest
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
@@ -120,7 +137,7 @@ public class UndoRedoFeatureTest {
 	}
 	
 	@Test
-	public void testUndoCreationTwoTimedFeatures() {
+	public void testUndoRedoCreationTwoTimedFeatures() {
 		Point p0 = new Point (0,0);
 		Point p1 = new Point (10,10);
 		Transition t = new Transition(new String("transition0"),
@@ -144,63 +161,30 @@ public class UndoRedoFeatureTest {
 		Set<IFeature> t1Features = t1.getFeatures();
 		assertEquals(tFeatures.size(), 1);
 		assertEquals(t1Features.size(), 1);
+		//undoTest
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Set<IFeature> actualFeatures = t.getFeatures();
 		Set<IFeature> actualFeaturest1 = t1.getFeatures();
 		assertEquals(expFt.size(), actualFeatures.size());
 		assertEquals(expFt1.size(), actualFeaturest1.size());
-	}
-	
-	@Test
-	public void testRedoCreationTwoTimedFeatures(){
-		Point p0 = new Point (0,0);
-		Point p1 = new Point (10,10);
-		Transition t = new Transition(new String("transition0"),
-				p0);
-		Transition t1 = new Transition(new String("transition1"),
-				p1);
-		Set<IFeature> initFt = t.getFeatures();
-		assertEquals(initFt.size(), 0);
-		Set<IFeature> initFt1 = t1.getFeatures();
-		assertEquals(initFt1.size(), 0);
-		ArrayList<PNelement> pnel = new ArrayList<PNelement>();
-		pnel.add(t);
-		pnel.add(t1);
-		IHistoryComposite hc = new HistoryComposite("crea");
-		for (PNelement pn : pnel ){
-			IFeature ft = new TimedTransitionFeature();
-			myDoc.addFeatureToNode(ft, pn, hc);
-		}
-		myDoc.getHistoryManager().addMemento(hc);
-		Set<IFeature> expFt = t.getFeatures();
-		Set<IFeature> expFt1 = t1.getFeatures();
-		assertEquals(expFt.size(), 1);
-		assertEquals(expFt1.size(), 1);
-		try {
-			myDoc.getHistoryManager().undo(null);
-		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//redoTest
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Set<IFeature> actualFeatures = t.getFeatures();
-		Set<IFeature> actualFeaturest1 = t1.getFeatures();
-		assertEquals(expFt.size(), actualFeatures.size());
-		assertEquals(expFt1.size(), actualFeaturest1.size());
+		actualFeatures = t.getFeatures();
+		actualFeaturest1 = t1.getFeatures();
+		assertEquals(tFeatures.size(), actualFeatures.size());
+		assertEquals(t1Features.size(), actualFeaturest1.size());
 	}
 	
 	@Test
-	public void testUndoRemovalOneTimedFeature() {
+	public void testUndoRedoRemovalOneTimedFeature() {
 		Point position = new Point (0,0);
 		Transition t = new Transition(new String("transition0"),
 				position);
@@ -210,49 +194,25 @@ public class UndoRedoFeatureTest {
 		t.addFeature(ft);
 		Set<IFeature> expectedFeatures = t.getFeatures();
 		assertEquals(expectedFeatures.size(), 1);
-		//rimuovo la feature dalla transizione
 		myDoc.removeFeatureFromNode(ft, t, myDoc.getHistoryManager());
-		assertEquals(t.getFeatures().size(), 0);
-		//undo
+		Set<IFeature> tFeatures = t.getFeatures();
+		assertEquals(tFeatures.size(), 0);
+		//undoTest
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//mi aspetto che ora gli elementi siano gli stessi di prima della rimozione
 		Set<IFeature> actualFeatures = t.getFeatures();
 		assertEquals(expectedFeatures.size(), actualFeatures.size());
-	}
-	
-	@Test
-	public void testRedoRemovalOneTimedFeature() {
-		Point position = new Point (0,0);
-		Transition t = new Transition(new String("transition0"),
-				position);
-		Set<IFeature> initFeatures = t.getFeatures();
-		assertEquals(initFeatures.size(), 0);
-		IFeature ft = new TimedTransitionFeature();
-		t.addFeature(ft);
-		assertEquals(t.getFeatures().size(), 1);
-		//rimuovo la feature dalla transizione
-		myDoc.removeFeatureFromNode(ft, t, myDoc.getHistoryManager());
-		Set<IFeature> expectedFeatures = t.getFeatures();
-		assertEquals(expectedFeatures.size(), 0);
-		try {
-			myDoc.getHistoryManager().undo(null);
-		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//redoTest
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Set<IFeature> actualFeatures = t.getFeatures();
-		assertEquals(expectedFeatures.size(), actualFeatures.size());	
+		actualFeatures = t.getFeatures();
+		assertEquals(tFeatures.size(), actualFeatures.size());	
 	}
 	
 	

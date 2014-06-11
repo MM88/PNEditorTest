@@ -72,8 +72,11 @@ public class FdtPropertyTest {
 		t.addFeature(myStoc);
 		StochasticTransitionFeature.FdtProperty myFdt = myStoc.new FdtProperty(mockedApp);
 		assertNotNull(myFdt);
-		String expectedEft = myStoc.getFdt();
-		assertEquals(expectedEft, myFdt.readValue());
+		String expectedFdt = myStoc.getFdt();
+		assertEquals(expectedFdt, myFdt.readValue());
+		expectedFdt = "uniform";
+		myStoc.setFdt(expectedFdt);
+		assertEquals(expectedFdt, myFdt.readValue());
 	}
 
 	@Test
