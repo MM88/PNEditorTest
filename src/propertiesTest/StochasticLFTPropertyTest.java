@@ -5,10 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -18,9 +15,14 @@ import pNeditor.PNeditorPlugin;
 import petriNetDomain.StochasticTransitionFeature;
 import petriNetDomain.Transition;
 import petriNetDomain.StochasticTransitionFeature.LFTProperty;
-import petriNetDomain.TimedTransitionFeature;
-import petriNetDomain.TimedTransitionFeature.LTFProperty;
 import pnEditorApp.PNeditorApplication;
+
+
+/**
+ * This class tests the basic functioning of the class {@link LFTProperty} of the class {@link StochasticTransitionFeature}
+ * @author Benedetta
+ *
+ */
 
 public class StochasticLFTPropertyTest {
 
@@ -73,6 +75,9 @@ public class StochasticLFTPropertyTest {
 		LFTProperty myLft = myStoc.new LFTProperty(mockedApp);
 		assertNotNull(myLft);
 		Double expectedEft = myStoc.getLFT();
+		assertEquals(expectedEft, myLft.readValue());
+		expectedEft = 3.2;
+		myStoc.setLFT(expectedEft);
 		assertEquals(expectedEft, myLft.readValue());
 	}
 

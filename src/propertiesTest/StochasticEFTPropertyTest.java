@@ -5,10 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -16,10 +13,16 @@ import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import petriNetDomain.StochasticTransitionFeature;
-import petriNetDomain.TimedTransitionFeature;
+import petriNetDomain.StochasticTransitionFeature.EFTProperty;
 import petriNetDomain.Transition;
-import petriNetDomain.TimedTransitionFeature.EFTProperty;
 import pnEditorApp.PNeditorApplication;
+
+
+/**
+ * This class tests the basic functioning of the class {@link EFTProperty} of the class {@link StochasticTransitionFeature}
+ * @author Benedetta
+ *
+ */
 
 public class StochasticEFTPropertyTest {
 
@@ -71,6 +74,9 @@ public class StochasticEFTPropertyTest {
 		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty(mockedApp);
 		assertNotNull(myEft);
 		Double expectedEft = myStoc.getEFT();
+		assertEquals(expectedEft, myEft.readValue());
+		expectedEft = 3.2;
+		myStoc.setEFT(expectedEft);
 		assertEquals(expectedEft, myEft.readValue());
 	}
 

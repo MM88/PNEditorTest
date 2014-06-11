@@ -5,10 +5,8 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
-import org.junit.AfterClass;
+
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -17,12 +15,16 @@ import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import petriNetDomain.FeaturePropertyAdapter;
 import petriNetDomain.PreemptiveTransitionFeature;
-import petriNetDomain.StochasticTransitionFeature;
 import petriNetDomain.Transition;
 import petriNetDomain.PreemptiveTransitionFeature.ResourcePriorityProperty;
 import petriNetDomain.PreemptiveTransitionFeature.ResourcesProperty;
-import petriNetDomain.StochasticTransitionFeature.FdtProperty;
 import pnEditorApp.PNeditorApplication;
+
+/**
+ * This class tests the basic functioning of the class {@link ResourcePriorityProperty}
+ * @author Benedetta
+ *
+ */
 
 public class ResourcePriorityPropertyTest {
 

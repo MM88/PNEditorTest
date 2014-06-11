@@ -5,10 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -16,9 +13,15 @@ import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import petriNetDomain.TimedTransitionFeature;
+import petriNetDomain.TimedTransitionFeature.EFTProperty;
 import petriNetDomain.Transition;
-import petriNetDomain.TimedTransitionFeature.LTFProperty;
 import pnEditorApp.PNeditorApplication;
+
+/**
+ * This class tests the basic functioning of the class {@link EFTProperty} of the class {@link TimedTransitionFeature}
+ * @author Benedetta
+ *
+ */
 
 public class TimedEFTPropertyTest {
 
@@ -71,6 +74,9 @@ public class TimedEFTPropertyTest {
 		assertNotNull(myEft);
 		Double expectedEft = myTimed.getEFT();
 		assertEquals(expectedEft, myEft.readValue());
+		expectedEft = 3.2;
+		myTimed.setEFT(expectedEft);
+		assertEquals(expectedEft, myEft.readValue());
 	}
 	
 	@Test
@@ -86,67 +92,67 @@ public class TimedEFTPropertyTest {
 		assertEquals(3.4, myEft.readValue());
 	}
 	
-//
-//	@Test
-//	public void testGetErrorMessage() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testGetName() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetName() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testGetDisplayName() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetDisplayName() {
-//		fail("Not yet implemented");
-//	} 
-//
-//	@Test
-//	public void testGetType() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetType() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testIsEditable() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetEditable() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testGetCategory() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetCategory() {
-//		fail("Not yet implemented");
-//	}
-//
 
-//
-//	@Test
-//	public void testGetEditorClass() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	public void testGetErrorMessage() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetName() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetName() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetDisplayName() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetDisplayName() {
+		fail("Not yet implemented");
+	} 
+
+	@Test
+	public void testGetType() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetType() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testIsEditable() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetEditable() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetCategory() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSetCategory() {
+		fail("Not yet implemented");
+	}
+
+
+
+	@Test
+	public void testGetEditorClass() {
+		fail("Not yet implemented");
+	}
 
 }

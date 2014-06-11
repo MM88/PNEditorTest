@@ -5,10 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -16,9 +13,15 @@ import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import petriNetDomain.StochasticTransitionFeature;
+import petriNetDomain.StochasticTransitionFeature.FdtProperty;
 import petriNetDomain.Transition;
-import petriNetDomain.StochasticTransitionFeature.EFTProperty;
 import pnEditorApp.PNeditorApplication;
+
+/**
+ * This class tests the basic functioning of the class {@link FdtProperty}
+ * @author Benedetta
+ *
+ */
 
 public class FdtPropertyTest {
 

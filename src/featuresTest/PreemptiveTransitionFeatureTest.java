@@ -10,9 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import FeatureFactories.PreemptiveTransitionFeatureFactory;
-
-
 import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
@@ -55,17 +52,14 @@ public class PreemptiveTransitionFeatureTest {
 		assertEquals(expectedName, myPree.getName());
 		ArrayList<IFeatureProperty> actualProperties = myPree.getProperties();
 		assertEquals(1, actualProperties.size());
+		Map<String, Integer> resources = myPree.getResources();
+		assertNotNull(resources);
 	}
 	
 	@Test
 	public void testAddResourceToMap() {
-		Point position = new Point (0,0);
-		Transition t = new Transition(new String("transition0"),
-				position);
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
-		t.addFeature(myPree);
-		myDoc.getSelectionModel().select(t, true);
 		String expName = "cpu"; 
 		Integer expPriority = 3;
 		myPree.addResourceToMap(expName, expPriority);
@@ -73,9 +67,7 @@ public class PreemptiveTransitionFeatureTest {
 		Integer actualPriority = actualResources.get(expName);
 		assertEquals(expPriority, actualPriority);
 	}
-
 	
-
 //	@Test
 //	public void testGetText() {
 //		fail("Not yet implemented");
@@ -123,18 +115,12 @@ public class PreemptiveTransitionFeatureTest {
 				position);
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);	
 		assertNotNull(myPree);
+		assertEquals(1, myPree.getProperties().size());
 		t.addFeature(myPree);
 		myDoc.getSelectionModel().select(t, true);
-		ArrayList<IFeatureProperty> expProperties = new ArrayList<IFeatureProperty>();
-		PreemptiveTransitionFeature.ResourcesProperty rp = myPree.new ResourcesProperty();
-		PreemptiveTransitionFeature.ResourcePriorityProperty rpp = myPree.new ResourcePriorityProperty("cpu");	
-		expProperties.add(rp);
-		expProperties.add(rpp);
 		myDoc.addResource("cpu");
 		ArrayList<IFeatureProperty> actualProperties = myPree.getProperties();
-		assertEquals(expProperties.size(), actualProperties.size());
+		assertEquals(2, actualProperties.size());
 	}
-
-
 
 }

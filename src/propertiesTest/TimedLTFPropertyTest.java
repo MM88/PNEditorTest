@@ -5,10 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -16,9 +13,15 @@ import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import petriNetDomain.TimedTransitionFeature;
+import petriNetDomain.TimedTransitionFeature.LTFProperty;
 import petriNetDomain.Transition;
-import petriNetDomain.TimedTransitionFeature.EFTProperty;
 import pnEditorApp.PNeditorApplication;
+
+/**
+ * This class tests the basic functioning of the class {@link LTFProperty} of the class {@link TimedTransitionFeature}
+ * @author Benedetta
+ *
+ */
 
 public class TimedLTFPropertyTest {
 
@@ -71,6 +74,9 @@ public class TimedLTFPropertyTest {
 		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty(mockedApp);
 		assertNotNull(myLft);
 		Double expectedEft = myTimed.getLFT();
+		assertEquals(expectedEft, myLft.readValue());
+		expectedEft = 3.2;
+		myTimed.setLFT(expectedEft);
 		assertEquals(expectedEft, myLft.readValue());
 	}
 
