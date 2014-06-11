@@ -4,17 +4,13 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import FeatureFactories.PreemptiveTransitionFeatureFactory;
 
 
 import pNeditor.PNeditorDocTemplate;
@@ -22,12 +18,15 @@ import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import petriNetDomain.IFeatureProperty;
 import petriNetDomain.PreemptiveTransitionFeature;
-import petriNetDomain.TimedTransitionFeature;
 import petriNetDomain.Transition;
 import petriNetDomain.PreemptiveTransitionFeature.ResourcePriorityProperty;
-import petriNetDomain.PreemptiveTransitionFeature.ResourcesProperty;
 import pnEditorApp.PNeditorApplication;
 
+/**
+ * This class tests the basic functioning of the class {@link PreemptiveTransitionFeature}
+ * @author Benedetta
+ *
+ */
 
 public class PreemptiveTransitionFeatureTest {
 
@@ -48,8 +47,6 @@ public class PreemptiveTransitionFeatureTest {
 		Mockito.when(mockedApp.getActiveDocument()).thenReturn(myDoc);	
 	}
 
-
-
 	@Test
 	public void testPreemptiveTransitionFeature() {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
@@ -60,7 +57,6 @@ public class PreemptiveTransitionFeatureTest {
 		assertEquals(1, actualProperties.size());
 	}
 	
-
 	@Test
 	public void testAddResourceToMap() {
 		Point position = new Point (0,0);
@@ -103,13 +99,12 @@ public class PreemptiveTransitionFeatureTest {
 		String expResource2 = "cpu2";
 		myDoc.addResource(expResource2);
 		myPree.addResources();
-		assertEquals( 3,myPree.getProperties().size());
+		assertEquals(3, myPree.getProperties().size());
 		IFeatureProperty actualProperty2 = fp.get(fp.size() - 1);
 		assertEquals(expResource2, ((ResourcePriorityProperty)actualProperty2).getName());
 		actualProperty = fp.get(fp.size() - 2);
 		assertEquals(expResource, ((ResourcePriorityProperty)actualProperty).getName());
 	}
-	
 
 	@Test
 	public void testGetResources() {
@@ -119,7 +114,6 @@ public class PreemptiveTransitionFeatureTest {
 		myPree.addResourceToMap(expName, expPriority);
 		Integer actualPriority = myPree.getResources().get(expName);
 		assertEquals(expPriority, actualPriority);
-		
 	}
 
 	@Test

@@ -88,7 +88,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			fPa.write((Object)newName);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Double expectedValue = Double.parseDouble(newName);
@@ -96,7 +95,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldName,myStoc.getEFT());
@@ -104,7 +102,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myStoc.getEFT());
@@ -132,7 +129,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			fPa.write((Object)newName);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Double expectedValue = Double.parseDouble(newName);
@@ -140,7 +136,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldName,myStoc.getLFT());
@@ -148,7 +143,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myStoc.getLFT());
@@ -186,7 +180,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			fPa.write((Object)newName);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Double expectedValue = Double.parseDouble(newName);
@@ -195,7 +188,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldName,myStoc.getEFT());
@@ -204,7 +196,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myStoc.getEFT());
@@ -232,8 +223,6 @@ public class UndoRedoPropertiesStochasticTest {
 		t1.addFeature(myStoc1);
 		Double oldName = myStoc.getLFT();
 		Double oldName1 = myStoc1.getLFT();
-//		myTimed.setLFT(5.8);  // per non generare errori
-//		myTimed1.setLFT(6.2);
 		myDoc.getSelectionModel().select(t, true);
 		myDoc.getSelectionModel().select(t1, true);
 		String newName = "3.2";
@@ -244,7 +233,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			fPa.write((Object)newName);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Double expectedValue = Double.parseDouble(newName);
@@ -253,7 +241,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldName,myStoc.getLFT());
@@ -262,7 +249,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myStoc.getLFT());
@@ -290,14 +276,12 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			fPa.write((Object)expectedValue);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myStoc.getFdt());	
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldValue,myStoc.getFdt());
@@ -305,7 +289,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myStoc.getFdt());
@@ -323,7 +306,7 @@ public class UndoRedoPropertiesStochasticTest {
 		assertNotNull(myStoc1);
 		FdtProperty myFdt = myStoc.new FdtProperty(mockedApp);
 		assertNotNull(myFdt);
-		FdtProperty myFdt1 = myStoc.new FdtProperty(mockedApp);
+		FdtProperty myFdt1 = myStoc1.new FdtProperty(mockedApp);
 		assertNotNull(myFdt1);
 		t.addFeature(myStoc);
 		t1.addFeature(myStoc1);
@@ -339,7 +322,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			fPa.write((Object)expectedValue);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myStoc.getFdt());
@@ -347,7 +329,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldValue,myStoc.getFdt());
@@ -356,7 +337,6 @@ public class UndoRedoPropertiesStochasticTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myStoc.getFdt());

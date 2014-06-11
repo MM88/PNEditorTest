@@ -13,7 +13,14 @@ import org.hamcrest.*;
 
 
 
+import petriNetDomain.PreemptiveTransitionFeature;
 import petriNetDomain.TimedTransitionFeature;
+
+/**
+ * This class tests the basic functioning of the class {@link TimedTransitionFeature}
+ * @author Benedetta
+ *
+ */
 
 public class TimedTransitionFeatureTest {
 
