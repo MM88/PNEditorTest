@@ -48,10 +48,10 @@ public class TimedEFTPropertyTest {
 
 	@Test
 	public void testEFTProperty() {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
 		t.addFeature(myTimed);
-		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty(mockedApp);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
 		String expectedName = "EFT Timed";
 		assertEquals(expectedName, myEft.getName());
@@ -67,10 +67,10 @@ public class TimedEFTPropertyTest {
 
 	@Test
 	public void testReadValue() {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
 		t.addFeature(myTimed);
-		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty(mockedApp);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
 		Double expectedEft = myTimed.getEFT();
 		assertEquals(expectedEft, myEft.readValue());
@@ -81,10 +81,10 @@ public class TimedEFTPropertyTest {
 	
 	@Test
 	public void testWriteValue() throws PropertyVetoException {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
 		t.addFeature(myTimed);
-		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty(mockedApp);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
 		myTimed.setLFT(4.5);
 		String newValue = "3.4";

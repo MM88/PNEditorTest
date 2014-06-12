@@ -58,9 +58,9 @@ public class UndoRedoPropertiesTimedTest {
 		Point position = new Point (0,0);
 		Transition t = new Transition("transition0",
 				position);
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
-		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty(mockedApp);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
 		t.addFeature(myTimed);
 		Double dflEft = (double) 0;
@@ -100,9 +100,9 @@ public class UndoRedoPropertiesTimedTest {
 		Point position = new Point (0,0);
 		Transition t = new Transition("transition0",
 				position);
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
-		LTFProperty myLtf = myTimed.new LTFProperty(mockedApp);
+		LTFProperty myLtf = myTimed.new LTFProperty();
 		assertNotNull(myLtf);
 		t.addFeature(myTimed);
 		Double dflLtf = (double) 0;
@@ -144,13 +144,13 @@ public class UndoRedoPropertiesTimedTest {
 				position);
 		Transition t1 = new Transition("transition1",
 				p1);
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
-		TimedTransitionFeature myTimed1 = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed1 = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed1);
-		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty(mockedApp);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
-		TimedTransitionFeature.EFTProperty myEft1 = myTimed1.new EFTProperty(mockedApp);
+		TimedTransitionFeature.EFTProperty myEft1 = myTimed1.new EFTProperty();
 		assertNotNull(myEft1);
 		t.addFeature(myTimed);
 		t1.addFeature(myTimed1);
@@ -199,13 +199,13 @@ public class UndoRedoPropertiesTimedTest {
 				position);
 		Transition t1 = new Transition("transition1",
 				p1);
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
-		TimedTransitionFeature myTimed1 = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed1 = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed1);
-		LTFProperty myLtf = myTimed.new LTFProperty(mockedApp);
+		LTFProperty myLtf = myTimed.new LTFProperty();
 		assertNotNull(myLtf);
-		LTFProperty myLtf1 = myTimed1.new LTFProperty(mockedApp);
+		LTFProperty myLtf1 = myTimed1.new LTFProperty();
 		assertNotNull(myLtf1);
 		t.addFeature(myTimed);
 		t1.addFeature(myTimed1);

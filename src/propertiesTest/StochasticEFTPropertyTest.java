@@ -49,10 +49,10 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testEFTProperty() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
 		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty(mockedApp);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
 		assertNotNull(myEft);
 		String expectedName = "EFT Stochastic";
 		assertEquals(expectedName, myEft.getName());
@@ -68,10 +68,10 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testReadValue() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
 		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty(mockedApp);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
 		assertNotNull(myEft);
 		Double expectedEft = myStoc.getEFT();
 		assertEquals(expectedEft, myEft.readValue());
@@ -82,10 +82,10 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testWriteValue() throws PropertyVetoException {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
 		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty(mockedApp);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
 		assertNotNull(myEft);
 		myStoc.setLFT(4.5);
 		String newValue = "3.4";

@@ -60,9 +60,9 @@ public class UndoRedoPropertiesStochasticTest {
 		Point position = new Point (0,0);
 		Transition t = new Transition("transition0",
 				position);
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty(mockedApp);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
 		assertNotNull(myEft);
 		t.addFeature(myStoc);
 		Double dflEft = (double) 0;
@@ -102,9 +102,9 @@ public class UndoRedoPropertiesStochasticTest {
 		Point position = new Point (0,0);
 		Transition t = new Transition("transition0",
 				position);
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
-		LFTProperty myLtf = myStoc.new LFTProperty(mockedApp);
+		LFTProperty myLtf = myStoc.new LFTProperty();
 		assertNotNull(myLtf);
 		t.addFeature(myStoc);
 		Double dflLtf = (double) 0;
@@ -146,13 +146,13 @@ public class UndoRedoPropertiesStochasticTest {
 				position);
 		Transition t1 = new Transition("transition1",
 				p1);
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
-		StochasticTransitionFeature myStoc1 = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc1 = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc1);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty(mockedApp);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
 		assertNotNull(myEft);
-		StochasticTransitionFeature.EFTProperty myEft1 = myStoc1.new EFTProperty(mockedApp);
+		StochasticTransitionFeature.EFTProperty myEft1 = myStoc1.new EFTProperty();
 		assertNotNull(myEft1);
 		t.addFeature(myStoc);
 		t1.addFeature(myStoc1);
@@ -201,13 +201,13 @@ public class UndoRedoPropertiesStochasticTest {
 				position);
 		Transition t1 = new Transition("transition1",
 				p1);
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
-		StochasticTransitionFeature myStoc1 = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc1 = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc1);
-		StochasticTransitionFeature.LFTProperty myLtf = myStoc.new LFTProperty(mockedApp);
+		StochasticTransitionFeature.LFTProperty myLtf = myStoc.new LFTProperty();
 		assertNotNull(myLtf);
-		StochasticTransitionFeature.LFTProperty myLtf1 = myStoc1.new LFTProperty(mockedApp);
+		StochasticTransitionFeature.LFTProperty myLtf1 = myStoc1.new LFTProperty();
 		assertNotNull(myLtf1);
 		t.addFeature(myStoc);
 		t1.addFeature(myStoc1);
@@ -249,9 +249,9 @@ public class UndoRedoPropertiesStochasticTest {
 	public void testUndoRedoFdtOneTransition() {	
 		Point position = new Point (0,0);
 		Transition t = new Transition("transition0", position);
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
-		FdtProperty myFdt = myStoc.new FdtProperty(mockedApp);
+		FdtProperty myFdt = myStoc.new FdtProperty();
 		assertNotNull(myFdt);
 		t.addFeature(myStoc);
 		String dflFdt = "";
@@ -290,13 +290,13 @@ public class UndoRedoPropertiesStochasticTest {
 		Point p1 = new Point (10,10);
 		Transition t = new Transition("transition0", position);
 		Transition t1 = new Transition("transition1", p1);
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
-		StochasticTransitionFeature myStoc1 = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc1 = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc1);
-		FdtProperty myFdt = myStoc.new FdtProperty(mockedApp);
+		FdtProperty myFdt = myStoc.new FdtProperty();
 		assertNotNull(myFdt);
-		FdtProperty myFdt1 = myStoc1.new FdtProperty(mockedApp);
+		FdtProperty myFdt1 = myStoc1.new FdtProperty();
 		assertNotNull(myFdt1);
 		t.addFeature(myStoc);
 		t1.addFeature(myStoc1);

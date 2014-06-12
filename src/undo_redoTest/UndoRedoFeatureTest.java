@@ -68,7 +68,7 @@ public class UndoRedoFeatureTest {
 				position);
 		Set<IFeature> expectedFeatures = t.getFeatures();
 		assertEquals(expectedFeatures.size(), 0);
-		IFeature ft = new TimedTransitionFeature();
+		IFeature ft = new TimedTransitionFeature(null);
 		myDoc.addFeatureToNode(ft, t, myDoc.getHistoryManager());
 		Set<IFeature> transitionFeatures = t.getFeatures();
 		assertEquals(transitionFeatures.size(), 1);
@@ -155,7 +155,7 @@ public class UndoRedoFeatureTest {
 		pnel.add(t1);
 		IHistoryComposite hc = new HistoryComposite("crea");
 		for (PNelement pn : pnel ){
-			IFeature ft = new TimedTransitionFeature();
+			IFeature ft = new TimedTransitionFeature(null);
 			myDoc.addFeatureToNode(ft, pn, hc);
 		}
 		myDoc.getHistoryManager().addMemento(hc);
@@ -192,7 +192,7 @@ public class UndoRedoFeatureTest {
 				position);
 		Set<IFeature> initFeatures = t.getFeatures();
 		assertEquals(initFeatures.size(), 0);
-		IFeature ft = new TimedTransitionFeature();
+		IFeature ft = new TimedTransitionFeature(null);
 		t.addFeature(ft);
 		Set<IFeature> expectedFeatures = t.getFeatures();
 		assertEquals(expectedFeatures.size(), 1);

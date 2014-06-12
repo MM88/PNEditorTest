@@ -48,10 +48,10 @@ public class FdtPropertyTest {
 
 	@Test
 	public void testFdtProperty() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
 		t.addFeature(myStoc);
-		StochasticTransitionFeature.FdtProperty myFdt = myStoc.new FdtProperty(mockedApp);
+		StochasticTransitionFeature.FdtProperty myFdt = myStoc.new FdtProperty();
 		assertNotNull(myFdt);
 		String expectedName = "Fdt Stochastic";
 		assertEquals(expectedName, myFdt.getName());
@@ -67,10 +67,10 @@ public class FdtPropertyTest {
 
 	@Test
 	public void testReadValue() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
 		t.addFeature(myStoc);
-		StochasticTransitionFeature.FdtProperty myFdt = myStoc.new FdtProperty(mockedApp);
+		StochasticTransitionFeature.FdtProperty myFdt = myStoc.new FdtProperty();
 		assertNotNull(myFdt);
 		String expectedFdt = myStoc.getFdt();
 		assertEquals(expectedFdt, myFdt.readValue());
@@ -81,10 +81,10 @@ public class FdtPropertyTest {
 
 	@Test
 	public void testWriteValue() throws PropertyVetoException {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
 		assertNotNull(myStoc);
 		t.addFeature(myStoc);
-		StochasticTransitionFeature.FdtProperty myFdt = myStoc.new FdtProperty(mockedApp);
+		StochasticTransitionFeature.FdtProperty myFdt = myStoc.new FdtProperty();
 		assertNotNull(myFdt);
 		String newValue = "uniform";
 		myFdt.writeValue(newValue);

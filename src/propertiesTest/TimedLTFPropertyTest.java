@@ -48,10 +48,10 @@ public class TimedLTFPropertyTest {
 
 	@Test
 	public void testLTFProperty() {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
 		t.addFeature(myTimed);
-		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty(mockedApp);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
 		assertNotNull(myLft);
 		String expectedName = "LFT Timed";
 		assertEquals(expectedName, myLft.getName());
@@ -68,10 +68,10 @@ public class TimedLTFPropertyTest {
 
 	@Test
 	public void testReadValue() {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
 		t.addFeature(myTimed);
-		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty(mockedApp);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
 		assertNotNull(myLft);
 		Double expectedEft = myTimed.getLFT();
 		assertEquals(expectedEft, myLft.readValue());
@@ -82,10 +82,10 @@ public class TimedLTFPropertyTest {
 
 	@Test
 	public void testWriteValue() throws PropertyVetoException {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
 		assertNotNull(myTimed);
 		t.addFeature(myTimed);
-		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty(mockedApp);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
 		assertNotNull(myLft);
 		String newValue = "3.4";
 		myLft.writeValue(newValue);

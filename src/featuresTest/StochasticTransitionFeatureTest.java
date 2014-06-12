@@ -17,7 +17,7 @@ public class StochasticTransitionFeatureTest {
 
 	@Test
 	public void testStochasticTransitionFeature() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(null);
 		assertNotNull(myStoc);
 		String expectedName = "Stochastic Transition";
 		assertEquals(expectedName, myStoc.getName());
@@ -26,7 +26,7 @@ public class StochasticTransitionFeatureTest {
 
 	@Test
 	public void testGetText() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(null);
 		String expectedFdt = "exponential";  // can add the other cases
 		myStoc.setFdt(expectedFdt);
 		Double expectedEFT = (double) 3.5;
@@ -39,7 +39,7 @@ public class StochasticTransitionFeatureTest {
 	
 	@Test
 	public void testSetGetFdt() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(null);
 		assertNotNull(myStoc);
 		assertEquals("", myStoc.getFdt());
 		String [] expectedFdt = new String[] { "exponential", "uniform",
@@ -57,7 +57,7 @@ public class StochasticTransitionFeatureTest {
 
 	@Test
 	public void testSetGetEFT() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(null);
 		assertNotNull(myStoc);
 		Double expectedEFT = (double) 0;
 		assertEquals(expectedEFT, myStoc.getEFT());
@@ -69,7 +69,7 @@ public class StochasticTransitionFeatureTest {
 
 	@Test
 	public void testSetGetLFT() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature();
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(null);
 		assertNotNull(myStoc);
 		Double expectedLFT = (double) 0;
 		assertEquals(expectedLFT, myStoc.getLFT());
