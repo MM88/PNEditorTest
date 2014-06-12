@@ -103,11 +103,11 @@ public class T2_4 {
 		//the elements selected are two transition with the same features
 		 
 		t1.addFeature(new TimedTransitionFeature(app));
-		t1.addFeature(new StochasticTransitionFeature());		
+		t1.addFeature(new StochasticTransitionFeature(null));		
 		
 		
 		t2.addFeature(new TimedTransitionFeature(app));
-		t2.addFeature(new StochasticTransitionFeature());
+		t2.addFeature(new StochasticTransitionFeature(null));
 		doc.getSelectionModel().select(t1, true);
 		doc.getSelectionModel().select(t2, true);
 		
@@ -165,11 +165,11 @@ public class T2_4 {
 		//if two elements have the same value of a property it is shown in the dockbar 
 		
 		t1.addFeature(new TimedTransitionFeature(app));
-		t1.addFeature(new StochasticTransitionFeature());		
+		t1.addFeature(new StochasticTransitionFeature(null));		
 		
 		
 		t2.addFeature(new TimedTransitionFeature(app));
-		t2.addFeature(new StochasticTransitionFeature());
+		t2.addFeature(new StochasticTransitionFeature(null));
 		doc.getSelectionModel().select(t1, true);
 		doc.getSelectionModel().select(t2, true);
 		

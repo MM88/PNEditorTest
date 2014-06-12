@@ -124,7 +124,7 @@ public class PropertiesDockBarTest {
 		
 		expecteds.add("name");
 		t1.addFeature(new TimedTransitionFeature(null));
-		t1.addFeature(new StochasticTransitionFeature());
+		t1.addFeature(new StochasticTransitionFeature(null));
 
 		doc.getSelectionModel().select(t1,true);
 		testObj.activate(doc);

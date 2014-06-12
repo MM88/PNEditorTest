@@ -111,7 +111,7 @@ public class T2_1 {
 		
 		Transition t1 = new Transition("transition1", new Point(0,0));
 		t1.addFeature(new TimedTransitionFeature(null));
-		t1.addFeature(new StochasticTransitionFeature());
+		t1.addFeature(new StochasticTransitionFeature(null));
 		doc.getSelectionModel().select(t1, true);
 		expecteds.add("name");
 		expecteds.add("Fdt");

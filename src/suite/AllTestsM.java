@@ -28,6 +28,6 @@ import featurizableTest.TransitionTest;
 	TransitionTest.class,
 	PropertiesDockBarTest.class,T1_1.class, T1_2.class , T1_3.class , T1_4.class,
 	T2_1.class , T2_2.class , T2_3.class , T2_4.class , T2_5.class })
-public class AllTests {
+public class AllTestsM {
 
 }

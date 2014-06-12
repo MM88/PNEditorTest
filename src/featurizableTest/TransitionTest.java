@@ -92,7 +92,7 @@ public class TransitionTest {
 	public void testRemoveAllFeature() {
 		
 		IFeature tf= new TimedTransitionFeature(null);
-		IFeature sf= new StochasticTransitionFeature();
+		IFeature sf= new StochasticTransitionFeature(null);
 		testObj.addFeature(tf);
 		testObj.addFeature(sf);
 		
