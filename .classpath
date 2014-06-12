@@ -3,14 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Framework"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/PNeditorApp"/>
-	<classpathentry kind="lib" path="lib/fest-swing-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/mockito-all-1.9.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Miky/Downloads/fest-reflect-1.4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Miky/Downloads/fest-assert-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Miky/Downloads/fest-util-1.2.5.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Copy of PNeditor"/>
-	<classpathentry kind="lib" path="C:/Users/Public/Documents/Università/Tesi/Copy of PNeditor/lib/l2fprod-common-all.jar"/>
+	<classpathentry kind="lib" path="lib/copyofpneditor.jar"/>
+	<classpathentry kind="lib" path="lib/pnapp.jar"/>
+	<classpathentry kind="lib" path="lib/l2fprod-common-all.jar"/>
+	<classpathentry kind="lib" path="lib/jtframework.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
