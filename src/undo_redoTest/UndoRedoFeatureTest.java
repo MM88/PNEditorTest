@@ -33,8 +33,10 @@ import pnEditorApp.PNeditorApplication;
 
 /**
  * This class tests that:
+ *  the creation of a feature is undoable
+ *  if the creation of a feature is undone it is redoable
  *  the removal of a feature is undoable
- *  if the removal of a feature is undone it must be redoable
+ *  if the removal of a feature is undone it is redoable
  * @author Benedetta
  *
  */

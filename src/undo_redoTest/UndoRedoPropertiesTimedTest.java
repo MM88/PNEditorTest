@@ -5,28 +5,31 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 import java.beans.PropertyVetoException;
-import java.util.ArrayList;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.*;
 
 import framework.undoredo.HistoryException;
-
 
 import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import pNeditor.PNeditorView;
 import petriNetDomain.FeaturePropertyAdapter;
-import petriNetDomain.PNelement;
 import petriNetDomain.TimedTransitionFeature;
 import petriNetDomain.TimedTransitionFeature.LTFProperty;
 import petriNetDomain.Transition;
 import pnEditorApp.PNeditorApplication;
+
+/**
+ * This class tests that:
+ * the edit of a property of a Timed Transition Feature is undoable
+ * if the edit of a property of a Timed Transition Feature is undone it is redoable
+ * @author Benedetta
+ *
+ */
+
 
 public class UndoRedoPropertiesTimedTest {
 	
@@ -35,8 +38,8 @@ public class UndoRedoPropertiesTimedTest {
 	private static PNeditorApplication mockedApp;
 	
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@Before
+	public  void setUp() throws Exception {
 		myPlugin = new PNeditorPlugin();
 		myPlugin.initClipboard();
 		myDoc = new PNeditorDocument();
@@ -48,21 +51,6 @@ public class UndoRedoPropertiesTimedTest {
 		view.initializeView(null, myDoc);
 		mockedApp = Mockito.mock(PNeditorApplication.class);	
 		Mockito.when(mockedApp.getActiveDocument()).thenReturn(myDoc);
-		
-	}
-	
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		myDoc.getSelectionModel().clearSelection();
 	}
 	
 	@Test
@@ -77,18 +65,17 @@ public class UndoRedoPropertiesTimedTest {
 		t.addFeature(myTimed);
 		Double dflEft = (double) 0;
 		Double oldName = myTimed.getEFT();
-		//controllo il valore di default
+		//check the default value
 		assertEquals(dflEft, oldName);
-		myTimed.setLFT(5.8);  // per non generare errori
+		myTimed.setLFT(5.8);  // to not generate errors
 		String newName = "3.2";
-		//scrivo il nuovo valore
+		//write the new value
 		myDoc.getSelectionModel().select(t, true);
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myEft);
 		try {
 			fPa.write((Object)newName);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Double expectedValue = Double.parseDouble(newName);
@@ -96,7 +83,6 @@ public class UndoRedoPropertiesTimedTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldName,myTimed.getEFT());
@@ -104,7 +90,6 @@ public class UndoRedoPropertiesTimedTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myTimed.getEFT());
@@ -122,17 +107,16 @@ public class UndoRedoPropertiesTimedTest {
 		t.addFeature(myTimed);
 		Double dflLtf = (double) 0;
 		Double oldName = myTimed.getEFT();
-		//controllo il valore di default
+		//check the default value
 		assertEquals(dflLtf, oldName);
 		String newName = "3.2";
-		//scrivo il nuovo valore
+		//write the new value
 		myDoc.getSelectionModel().select(t, true);
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myLtf);
 		try {
 			fPa.write((Object)newName);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Double expectedValue = Double.parseDouble(newName);
@@ -140,7 +124,6 @@ public class UndoRedoPropertiesTimedTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldName,myTimed.getLFT());
@@ -148,7 +131,6 @@ public class UndoRedoPropertiesTimedTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myTimed.getLFT());
@@ -174,19 +156,18 @@ public class UndoRedoPropertiesTimedTest {
 		t1.addFeature(myTimed1);
 		Double oldName = myTimed.getEFT();
 		Double oldName1 = myTimed1.getEFT();
-		myTimed.setLFT(5.8);  // per non generare errori
+		myTimed.setLFT(5.8);  // to not generate errors
 		myTimed1.setLFT(6.2);
 		myDoc.getSelectionModel().select(t, true);
 		myDoc.getSelectionModel().select(t1, true);
 		String newName = "3.2";
-		//scrivo il nuovo valore
+		//write the new value
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myEft);
 		fPa.addProperty(myEft1);
 		try {
 			fPa.write((Object)newName);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Double expectedValue = Double.parseDouble(newName);
@@ -195,7 +176,6 @@ public class UndoRedoPropertiesTimedTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldName,myTimed.getEFT());
@@ -204,7 +184,6 @@ public class UndoRedoPropertiesTimedTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myTimed.getEFT());
@@ -232,19 +211,16 @@ public class UndoRedoPropertiesTimedTest {
 		t1.addFeature(myTimed1);
 		Double oldName = myTimed.getLFT();
 		Double oldName1 = myTimed1.getLFT();
-//		myTimed.setLFT(5.8);  // per non generare errori
-//		myTimed1.setLFT(6.2);
 		myDoc.getSelectionModel().select(t, true);
 		myDoc.getSelectionModel().select(t1, true);
 		String newName = "3.2";
-		//scrivo il nuovo valore
+		//write the new value
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myLtf);
 		fPa.addProperty(myLtf1);
 		try {
 			fPa.write((Object)newName);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Double expectedValue = Double.parseDouble(newName);
@@ -253,7 +229,6 @@ public class UndoRedoPropertiesTimedTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(oldName,myTimed.getLFT());
@@ -262,7 +237,6 @@ public class UndoRedoPropertiesTimedTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(expectedValue, myTimed.getLFT());

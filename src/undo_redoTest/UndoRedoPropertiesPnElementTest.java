@@ -1,6 +1,5 @@
 package undo_redoTest;
 
-
 import static org.junit.Assert.*;
 
 import java.awt.Point;
@@ -19,13 +18,19 @@ import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
 import petriNetDomain.Place;
 import petriNetDomain.Transition;
-import pnEditorApp.PNeditorApplication;
+
+/**
+ * This class tests that:
+ * the edit of a property of a Pnelement is undoable
+ * if the edit of a property of a Pnelement is undone it is redoable
+ * @author Benedetta
+ *
+ */
 
 public class UndoRedoPropertiesPnElementTest {
 
 	private static PNeditorPlugin myPlugin;
 	private static PNeditorDocument myDoc;
-	private static PNeditorApplication mockedApp;
 	
 
 	@Before
@@ -36,8 +41,6 @@ public class UndoRedoPropertiesPnElementTest {
 		assertNotNull(myDoc);
 		PNeditorDocTemplate dt = new PNeditorDocTemplate(myPlugin);
 		myDoc.setDocTemplate(dt);
-		mockedApp = Mockito.mock(PNeditorApplication.class);	
-		Mockito.when(mockedApp.getActiveDocument()).thenReturn(myDoc);	
 	}
 	
 	@Test
@@ -51,20 +54,16 @@ public class UndoRedoPropertiesPnElementTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(uExpName, t.getName());
+		//redoTest
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(rExpName, t.getName());
 	}
 	
-	
-	
-
 }
