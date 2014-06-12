@@ -40,8 +40,6 @@ public class UndoRedoPropertiesPreemptiveTest {
 		mockedApp = Mockito.mock(PNeditorApplication.class);	
 		Mockito.when(mockedApp.getActiveDocument()).thenReturn(myDoc);	
 	}
-
-	
 	
 	@Test
 	public void testUndoRedoResourcesProperty() {	

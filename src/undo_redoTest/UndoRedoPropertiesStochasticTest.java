@@ -7,10 +7,7 @@ import static org.junit.Assert.assertNotNull;
 import java.awt.Point;
 import java.beans.PropertyVetoException;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -22,12 +19,18 @@ import petriNetDomain.FeaturePropertyAdapter;
 import petriNetDomain.StochasticTransitionFeature;
 import petriNetDomain.StochasticTransitionFeature.FdtProperty;
 import petriNetDomain.StochasticTransitionFeature.LFTProperty;
-import petriNetDomain.TimedTransitionFeature;
 import petriNetDomain.Transition;
-import petriNetDomain.TimedTransitionFeature.EFTProperty;
-import petriNetDomain.TimedTransitionFeature.LTFProperty;
 import pnEditorApp.PNeditorApplication;
 import framework.undoredo.HistoryException;
+
+/**
+ * This class tests that:
+ * the edit of a property of a Timed Transition Feature is undoable
+ * if the edit of a property of a Timed Transition Feature is undone it is redoable
+ * @author Benedetta
+ *
+ */
+
 
 public class UndoRedoPropertiesStochasticTest {
 
@@ -35,9 +38,8 @@ public class UndoRedoPropertiesStochasticTest {
 	private static PNeditorDocument myDoc;
 	private static PNeditorApplication mockedApp;
 	
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		myPlugin = new PNeditorPlugin();
 		myPlugin.initClipboard();
 		myDoc = new PNeditorDocument();
@@ -49,20 +51,8 @@ public class UndoRedoPropertiesStochasticTest {
 		view.initializeView(null, myDoc);
 		mockedApp = Mockito.mock(PNeditorApplication.class);	
 		Mockito.when(mockedApp.getActiveDocument()).thenReturn(myDoc);
-		
-	}
-	
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 	
 	
 	@Test
@@ -77,11 +67,11 @@ public class UndoRedoPropertiesStochasticTest {
 		t.addFeature(myStoc);
 		Double dflEft = (double) 0;
 		Double oldName = myStoc.getEFT();
-		//controllo il valore di default
+		//check the default value
 		assertEquals(dflEft, oldName);
-		myStoc.setLFT(5.8);  // per non generare errori
+		myStoc.setLFT(5.8);   // to not generate errors
 		String newName = "3.2";
-		//scrivo il nuovo valore
+		//write the new value
 		myDoc.getSelectionModel().select(t, true);
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myEft);
@@ -119,10 +109,10 @@ public class UndoRedoPropertiesStochasticTest {
 		t.addFeature(myStoc);
 		Double dflLtf = (double) 0;
 		Double oldName = myStoc.getEFT();
-		//controllo il valore di default
+		//check the default value
 		assertEquals(dflLtf, oldName);
 		String newName = "3.2";
-		//scrivo il nuovo valore
+		//write the new value
 		myDoc.getSelectionModel().select(t, true);
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myLtf);
@@ -168,12 +158,12 @@ public class UndoRedoPropertiesStochasticTest {
 		t1.addFeature(myStoc1);
 		Double oldName = myStoc.getEFT();
 		Double oldName1 = myStoc1.getEFT();
-		myStoc.setLFT(5.8);  // per non generare errori
+		myStoc.setLFT(5.8);  // to not generate errors
 		myStoc1.setLFT(6.2);
 		myDoc.getSelectionModel().select(t, true);
 		myDoc.getSelectionModel().select(t1, true);
 		String newName = "3.2";
-		//scrivo il nuovo valore
+		//write the new value
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myEft);
 		fPa.addProperty(myEft1);
@@ -226,7 +216,7 @@ public class UndoRedoPropertiesStochasticTest {
 		myDoc.getSelectionModel().select(t, true);
 		myDoc.getSelectionModel().select(t1, true);
 		String newName = "3.2";
-		//scrivo il nuovo valore
+		//write the new value
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myLtf);
 		fPa.addProperty(myLtf1);
@@ -266,10 +256,10 @@ public class UndoRedoPropertiesStochasticTest {
 		t.addFeature(myStoc);
 		String dflFdt = "";
 		String oldValue = myStoc.getFdt();
-		//controllo il valore di default
+		//check the default value
 		assertEquals(dflFdt, oldValue);
 		String expectedValue = "expolinomial";
-		//scrivo il nuovo valore
+		//write the new value
 		myDoc.getSelectionModel().select(t, true);
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myFdt);
@@ -315,7 +305,7 @@ public class UndoRedoPropertiesStochasticTest {
 		myDoc.getSelectionModel().select(t, true);
 		myDoc.getSelectionModel().select(t1, true);
 		String expectedValue = "expolinomial";
-		//scrivo il nuovo valore
+		//write the new value
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myFdt);
 		fPa.addProperty(myFdt1);
@@ -342,13 +332,5 @@ public class UndoRedoPropertiesStochasticTest {
 		assertEquals(expectedValue, myStoc.getFdt());
 		assertEquals(expectedValue, myStoc1.getFdt());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
