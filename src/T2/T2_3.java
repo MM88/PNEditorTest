@@ -39,6 +39,10 @@ public class T2_3 {
 	private static PropertiesDockBar pDock;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
+	private Transition t1;
+	private Property[] properties;
+	private PNeditorApplication app;
+	final double DELTA = 1e-15;
 	/**
 	 * set up the main classes needed in order to create a document 
 	 * and add elements to it and perform operations on them
@@ -60,22 +64,28 @@ public class T2_3 {
 		pDock = new PropertiesDockBar();
 	}
 
+	@Before 
+	public void before(){
+		t1 = new Transition("transition1", new Point(0,0));
+	    app = mock(PNeditorApplication.class);
+		when(app.getActiveDocument()).thenReturn(doc);	
+	}
+	@After 
+	public void after(){
+		 doc.getSelectionModel().clearSelection();
+	}
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
 
 	@Test
-	public void test() throws AWTException {
-		final double DELTA = 1e-15;
-		//try to change the LFT property of a transition and check if the value is changed on the document
-		PNeditorApplication app = mock(PNeditorApplication.class);
-		when(app.getActiveDocument()).thenReturn(doc);		
+	public void test1() throws AWTException {
 		
-		Transition t1 = new Transition("transition1", new Point(0,0));
-		t1.addFeature(new TimedTransitionFeature(app));
+		//try to change the LFT property of a transition and check if the value is changed on the document					
 		
-		Property[] properties;
+		t1.addFeature(new TimedTransitionFeature(app));		
+		
 		doc.addTransitionToPetriNet(t1, null);
 		doc.getSelectionModel().select(t1, true);
 		pDock.activate(doc);
@@ -95,11 +105,15 @@ public class T2_3 {
 				actual = (Double) p.readValue();}
 		}
 		
-	   assertEquals(expected, actual, DELTA);
-	   doc.getSelectionModel().clearSelection();
-	   
-	   //try to add a new resource with the property AddResource of a preemtive transition feature
-	   
+	   assertEquals(expected, actual, DELTA);  
+		
+	}
+	
+	@Test
+	public void test2(){
+		
+	   //try to add a new resource with the property AddResource of a preemtive transition feature	
+		
 	   t1.addFeature(new PreemptiveTransitionFeature(app));
 	   doc.getSelectionModel().select(t1, true);
 		pDock.activate(doc);
@@ -112,7 +126,6 @@ public class T2_3 {
 			}
 		}
 		assertTrue(doc.getResources().contains("cpu"));
-		
 	}
 
 }

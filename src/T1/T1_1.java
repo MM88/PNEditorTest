@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -36,6 +37,11 @@ public class T1_1 {
 	private static FeaturesDockBar fDock;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
+	
+	private static ArrayList<IFeatureFactory> expecteds;
+	private static ArrayList<IFeatureFactory> actuals;
+	private IContentProvider cp;
+	private Transition t1;
 	/**
 	 * set up the main classes needed in order to create a document 
 	 * and add elements to it and perform operations on them
@@ -56,21 +62,31 @@ public class T1_1 {
 		view.initializeView(null, doc);
 		
 		fDock = new FeaturesDockBar(plugin.getFeatureFactory());
+		expecteds = new ArrayList<IFeatureFactory>();
+		actuals = new ArrayList<IFeatureFactory>();
 	}
 
+	@Before
+	public void before(){
+
+		t1 = new Transition("transition1", new Point(0,0));	
+		doc.addTransitionToPetriNet(t1, null);
+	}
+	
+	@After
+	public void after(){
+		expecteds.clear();
+		actuals.clear();	
+		doc.getSelectionModel().clearSelection();	
+	}
+	
 	@AfterClass
 	public static void tearDown() {
     }
 
 
 	@Test
-	public void test() {
-
-		ArrayList<IFeatureFactory> expecteds = new ArrayList<IFeatureFactory>();
-		ArrayList<IFeatureFactory> actuals = new ArrayList<IFeatureFactory>();
-		IContentProvider cp;
-		Transition t1 = new Transition("transition1", new Point(0,0));	
-		doc.addTransitionToPetriNet(t1, null);
+	public void test1() {		
 		
 		//check it gives all the factories if the element is a Tansition without features
 			
@@ -88,12 +104,12 @@ public class T1_1 {
 		} 
 		
 		assertEquals(expecteds.size(), actuals.size());
-		assertTrue(actuals.containsAll(expecteds));			
+		assertTrue(actuals.containsAll(expecteds));	
 		
-		doc.getSelectionModel().clearSelection();
+	}
 	
-		expecteds.clear();
-		actuals.clear();
+	@Test
+	public void test2(){
 		
 		//check it gives only Stochastic and Preemptive if the element is a Tansition with Timed feature
 		
@@ -115,11 +131,13 @@ public class T1_1 {
 		} 
 		
 		assertEquals(expecteds.size(), actuals.size());
-		assertTrue(actuals.containsAll(expecteds));	
+		assertTrue(actuals.containsAll(expecteds));			
+						
+	}
+	
+	@Test
+	public void test3(){
 		
-		doc.getSelectionModel().clearSelection();
-		expecteds.clear();
-		actuals.clear();
 		
 		//check that doesnt gives factories if the element selected is a place
 		
@@ -138,11 +156,7 @@ public class T1_1 {
 		
 		
 		assertEquals(expecteds.isEmpty(), actuals.isEmpty());
-		
-		doc.getSelectionModel().clearSelection();
-		
-		
-		
+	
 	}
 
 }

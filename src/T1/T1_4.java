@@ -37,6 +37,13 @@ public class T1_4 {
 	private static FeaturesDockBar fDock;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
+	
+	private static ArrayList<IFeatureFactory> expecteds;
+	private static ArrayList<IFeatureFactory> actuals;
+	private IContentProvider cp;
+	private Transition t1;
+	private Transition t2;
+	private Place p1;
 	/**
 	 * set up the main classes needed in order to create a document 
 	 * and add elements to it and perform operations on them
@@ -57,24 +64,36 @@ public class T1_4 {
 		view.initializeView(null, doc);
 		
 		fDock = new FeaturesDockBar(plugin.getFeatureFactory());
+		
+		expecteds = new ArrayList<IFeatureFactory>();
+		actuals = new ArrayList<IFeatureFactory>();
 	}
+	
+	@Before
+	public void before(){
+		
+		t1 = new Transition("transition1", new Point(0,0));	
+		doc.addTransitionToPetriNet(t1, null);
+		t2 = new Transition("transition2", new Point(10,10));	
+		doc.addTransitionToPetriNet(t2, null);
+		p1 = new Place("place1", new Point(20,20));
+		doc.addPlaceToPetriNet(p1, null);
+	}
+	
+	@After
+	public void after(){
+		
+		expecteds.clear();
+		actuals.clear();	
+		doc.getSelectionModel().clearSelection();	
+	}
+	
 	@AfterClass
 	public static void tearDown() throws Exception {
 	}
 	
 	@Test
-	public void test() {
-	
-		ArrayList<IFeatureFactory> expecteds = new ArrayList<IFeatureFactory>();
-		ArrayList<IFeatureFactory> actuals = new ArrayList<IFeatureFactory>();
-		IContentProvider cp;
-		
-		Transition t1 = new Transition("transition1", new Point(0,0));	
-		doc.addTransitionToPetriNet(t1, null);
-		Transition t2 = new Transition("transition2", new Point(10,10));	
-		doc.addTransitionToPetriNet(t2, null);
-		Place p1 = new Place("place1", new Point(20,20));
-		doc.addPlaceToPetriNet(p1, null);
+	public void test1() {		
 		
 		//with a place and a transition selected there should not be factories shown
 		doc.getSelectionModel().select(t1, true);
@@ -88,10 +107,12 @@ public class T1_4 {
 					actuals.add((IFeatureFactory) cp.getChild(doc, i));
 			}
 		} 
-		assertEquals(expecteds.isEmpty(), actuals.isEmpty());
-		doc.getSelectionModel().clearSelection();
-		expecteds.clear();
-		actuals.clear();
+		assertEquals(expecteds.isEmpty(), actuals.isEmpty());	
+			
+	}
+	
+	@Test
+	public void test2(){
 		
 		//with two transitions without features all the factories must be shown
 		doc.getSelectionModel().select(t1, true);
@@ -109,10 +130,10 @@ public class T1_4 {
 		
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));	
-		
-		doc.getSelectionModel().clearSelection();
-		expecteds.clear();
-		actuals.clear();
+				
+	}
+	@Test
+	public void test3(){
 		
 		//with two transitions, one of the two has a feature, all the factories must be shown
 		t1.addFeature(new TimedTransitionFeature(null));
@@ -131,10 +152,10 @@ public class T1_4 {
 		
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));	
-		
-		doc.getSelectionModel().clearSelection();
-		expecteds.clear();
-		actuals.clear();
+				
+	}
+	@Test
+	public void test4(){
 		
 		//two transitions with the same feature only the other factories must be shown unchecked
 		t2.addFeature(new TimedTransitionFeature(null));
@@ -156,11 +177,8 @@ public class T1_4 {
 		} 
 		
 		assertEquals(expecteds.size(), actuals.size());
-		assertTrue(actuals.containsAll(expecteds));	
-		
-		doc.getSelectionModel().clearSelection();
-		expecteds.clear();
-		actuals.clear();	
+		assertTrue(actuals.containsAll(expecteds));		
 	}
+	
 
 }

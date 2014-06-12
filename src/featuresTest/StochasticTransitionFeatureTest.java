@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.easymock.EasyMock.*;
+
 
 import petriNetDomain.StochasticTransitionFeature;
 import pnEditorApp.Main;

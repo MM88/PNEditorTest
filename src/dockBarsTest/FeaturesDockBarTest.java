@@ -38,7 +38,9 @@ public class FeaturesDockBarTest {
 	private static FeaturesDockBar testObj = null;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
-	
+	private IContentProvider actuals;
+	private Transition t1;
+	private static ArrayList<IFeatureFactory> expecteds;
 	/**
 	 * set up the main classes needed in order to create a document 
 	 * and add elements to it and perform operations on them
@@ -57,11 +59,20 @@ public class FeaturesDockBarTest {
 		view.setDocument(doc);
 		view.initializeView(null, doc);
 		
-		testObj = new FeaturesDockBar(plugin.getFeatureFactory());
-		
-		
+		testObj = new FeaturesDockBar(plugin.getFeatureFactory());		
+		expecteds = plugin.getFeatureFactory();	
 	}
 
+	@Before
+	public void before(){
+		t1 = new Transition("transition1", new Point(0,0));		
+		doc.addTransitionToPetriNet(t1, null);
+		doc.getSelectionModel().select(t1,true);
+	}
+	@After
+	public void after(){
+		doc.getSelectionModel().clearSelection();
+	}
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
@@ -75,24 +86,27 @@ public class FeaturesDockBarTest {
 	 * then its tested if the dockbar works when a checkbox is checked/unchecked
 	 */
 	@Test
-	public void test() {
+	public void test1() {	
 		
-		Transition t1 = new Transition("transition1", new Point(0,0));
-		IContentProvider actuals;
-		doc.addTransitionToPetriNet(t1, null);
-		doc.getSelectionModel().select(t1,true);
 		testObj.activate(doc);
-		ArrayList<IFeatureFactory> expecteds = plugin.getFeatureFactory();		
+			
 		actuals = testObj.getViewer().getContentProvider();
 	
 		for (int i=0; i<actuals.getChildrenCount(doc); i++){
 			assertEquals(actuals.getChild(doc, i).getClass(), expecteds.get(i).getClass());		
-		} 
+		} 	
+		
+	}
+	
+	@Test 
+	public void test2(){
 		
 		//with feature
+		
 		t1.addFeature(new TimedTransitionFeature(null));
 		doc.getSelectionModel().select(t1,true);
 		testObj.activate(doc);
+		actuals = testObj.getViewer().getContentProvider();
 		for (int i=0; i<actuals.getChildrenCount(doc); i++){
 			assertEquals(actuals.getChild(doc, i).getClass(), expecteds.get(i).getClass());	
 			if ( actuals.getChild(doc,i).getClass().equals(TimedTransitionFeatureFactory.class))
@@ -100,14 +114,13 @@ public class FeaturesDockBarTest {
 				assertTrue(testObj.getViewer().isElementChecked(actuals.getChild(doc,i)));
 			}
 		}
-		
-		doc.getSelectionModel().clearSelection();
+				
+	}
+	
+	@Test 
+	public void test3(){
 		
 		//if a checkbox is selected the dockbar must create the corresoinding feature and stay checked
-		
-		Transition t2 = new Transition("transition2", new Point(10,10));
-		doc.addTransitionToPetriNet(t2, null);
-		doc.getSelectionModel().select(t2, true);
 		
 		testObj.activate(doc);
 		actuals = testObj.getViewer().getContentProvider();
@@ -119,7 +132,7 @@ public class FeaturesDockBarTest {
 				catch(NullPointerException e){}
 			}
 		}
-		assertTrue(t2.hasFeature("Timed Transition"));
+		assertTrue(t1.hasFeature("Timed Transition"));
 		actuals = testObj.getViewer().getContentProvider();
 		for (int i=0; i<actuals.getChildrenCount(doc); i++){
 			if ( actuals.getChild(doc,i).getClass().equals(TimedTransitionFeatureFactory.class))

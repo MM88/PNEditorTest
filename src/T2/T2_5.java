@@ -37,6 +37,12 @@ public class T2_5 {
 	private static PropertiesDockBar pDock;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
+	final double DELTA = 1e-15;
+	private double expected;
+	private double actual;
+	private static PNeditorApplication app;
+	private Transition t1;
+	private Property[] properties;
 	/**
 	 * set up the main classes needed in order to create a document 
 	 * and add elements to it and perform operations on them
@@ -56,32 +62,37 @@ public class T2_5 {
 		view.setDocument(doc);
 		view.initializeView(null, doc);
 		pDock = new PropertiesDockBar();
+		
+		app = mock(PNeditorApplication.class);
+		when(app.getActiveDocument()).thenReturn(doc);	
 	}
 
-
+	@Before
+	public void before(){		
+		t1 = new Transition("transition1", new Point(0,0));
+		t1.addFeature(new TimedTransitionFeature(app));		
+		doc.addTransitionToPetriNet(t1, null);
+		doc.getSelectionModel().select(t1, true);
+	}
+	
+	@After
+	public void after(){
+		doc.getSelectionModel().clearSelection();
+	}
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
 	@Test
-	public void test() {
-		final double DELTA = 1e-15;
-		double expected;
-		double actual;
-		PNeditorApplication app = mock(PNeditorApplication.class);
-		when(app.getActiveDocument()).thenReturn(doc);		
+	public void test1() {		
+				
+		//try to change the EFT property with a value grater than LFT value
 		
-		Transition t1 = new Transition("transition1", new Point(0,0));
-		t1.addFeature(new TimedTransitionFeature(app));
-		
-		Property[] properties;
-		doc.addTransitionToPetriNet(t1, null);
-		doc.getSelectionModel().select(t1, true);
 		pDock.activate(doc);
 		pDock.createSheet();
-		properties = pDock.getSheet().getProperties();
-		
-		//try to change the EFT property with a value grater than LFT value
+		properties = pDock.getSheet().getProperties();		
+	
 		for (int i=0; i<properties.length;i++){
 			if (properties[i].getDisplayName().equalsIgnoreCase("EFT")){
 				properties[i].setValue("10");
@@ -95,19 +106,21 @@ public class T2_5 {
 					if (p.getDisplayName().equalsIgnoreCase("EFT")){
 					actual = (Double) p.readValue();}
 				}
-			}
-		
+			}		
 		assertEquals(expected, actual, DELTA);
-					
-		doc.getSelectionModel().clearSelection();
+	
+	}
+
+	@Test
+	public void test2(){
 		
-	   //try to change the LFT property with a value smaller than EFT value
+		//try to change the LFT property with a value smaller than EFT value
 		
-		doc.getSelectionModel().select(t1, true);
 		pDock.activate(doc);
 		pDock.createSheet();
 		properties = pDock.getSheet().getProperties();
-		//set two values that doesn't generate error
+		
+		//set two values that don't generate error
 		for (int i=0; i<properties.length;i++){
 			if (properties[i].getDisplayName().equalsIgnoreCase("LFT")){
 				properties[i].setValue("10");
@@ -135,10 +148,13 @@ public class T2_5 {
 			}
 		
 		 assertEquals(expected, actual, DELTA);
+	}
+	
+	@Test
+	public void test3(){
+		
+		 //try to give two transitions the same name
 		 
-		 doc.getSelectionModel().clearSelection();
-		 
-		 //try to give two transitions the same name 
 		 Transition t2 = new Transition("transition2", new Point(10,10));
 		 doc.addTransitionToPetriNet(t2, null);
 		 doc.getSelectionModel().select(t1, true);
@@ -156,13 +172,13 @@ public class T2_5 {
 				}
 		}
 		 assertEquals(t2.getName(), "transition2");
+	}
+	
+	@Test
+	public void test4(){
 		 
-		 doc.getSelectionModel().clearSelection();
-		 
-		 //try to give to LFT a string value
-		 
-		 t2.addFeature(new TimedTransitionFeature(app));
-		 doc.getSelectionModel().select(t2, true);
+		 //try to give to LFT a string value		 
+		
 		 pDock.activate(doc);
 		 pDock.createSheet();
 		 
@@ -177,14 +193,16 @@ public class T2_5 {
 		expected = 0;
 	    actual = 10; 	    
 	   
-		for ( IFeatureProperty p : t2.getFeature("Timed Transition").getProperties() ){ 
+		for ( IFeatureProperty p : t1.getFeature("Timed Transition").getProperties() ){ 
 			if (p.getDisplayName().equalsIgnoreCase("LFT")){
 			actual = (Double) p.readValue();}
 		}
 		
 		assertEquals(expected, actual, DELTA);
-		 
-		 doc.getSelectionModel().clearSelection();
+	}
+	
+	@Test
+	public void test5(){
 		 
 		 //try to add a resource that already exists
 		 
@@ -208,9 +226,5 @@ public class T2_5 {
 				actual++;
 				
 		assertEquals(expected, actual,DELTA);
-	    
-		doc.getSelectionModel().clearSelection();
-	
 	}
-
 }

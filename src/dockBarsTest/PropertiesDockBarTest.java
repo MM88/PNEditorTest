@@ -44,7 +44,10 @@ public class PropertiesDockBarTest {
 	private static PropertiesDockBar testObj = null;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
-	
+	private static ArrayList<String> expecteds;
+	private static ArrayList<String> actuals;
+	private	Property[] properties;
+	private Transition t1;
 	/**
 	 * set up the main classes needed in order to create a document 
 	 * and add elements to it and perform operations on them
@@ -65,8 +68,24 @@ public class PropertiesDockBarTest {
 		view.initializeView(null, doc);
 		
 		testObj = new PropertiesDockBar();
+		
+		expecteds = new ArrayList<String>();
+		actuals = new ArrayList<String>();
 	}
-
+	
+	@Before	
+	public void before(){
+		t1 = new Transition("transition1", new Point(0,0));		
+		doc.addTransitionToPetriNet(t1, null);
+	}
+	
+	@After
+	public void after(){
+		expecteds.clear();
+		actuals.clear();
+		doc.getSelectionModel().clearSelection();
+	}
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
@@ -78,15 +97,9 @@ public class PropertiesDockBarTest {
 	 * then its done a stress test based on the number of element in the net
 	 */
 	@Test
-	public void test() {
+	public void test1() {	
 		
-		ArrayList<String> expecteds = new ArrayList<String>();
-		ArrayList<String> actuals = new ArrayList<String>();
-		Property[] properties;
 		
-		Transition t1 = new Transition("transition1", new Point(0,0));
-		
-		doc.addTransitionToPetriNet(t1, null);
 		doc.getSelectionModel().select(t1,true);
 		
 		testObj.activate(doc);
@@ -99,10 +112,17 @@ public class PropertiesDockBarTest {
 			actuals.add(properties[i].getDisplayName());
 		}
 		assertEquals(expecteds.size(), actuals.size());
-		assertTrue(actuals.containsAll(expecteds));	
-		doc.getSelectionModel().clearSelection();
+		assertTrue(actuals.containsAll(expecteds));			
+		
+		
+	}
+	
+	@Test
+	public void test2(){
 		
 		//with a feature
+		
+		expecteds.add("name");
 		t1.addFeature(new TimedTransitionFeature(null));
 		t1.addFeature(new StochasticTransitionFeature());
 
@@ -117,31 +137,32 @@ public class PropertiesDockBarTest {
 		}	
 		
 	    properties = testObj.getSheet().getProperties();
-		actuals.clear();
+		
 		for (int i=0; i<properties.length;i++){
 			actuals.add(properties[i].getDisplayName());
 		}
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));		
-		doc.getSelectionModel().clearSelection();
-		
+				
+	}
+	@Test
+	public void test3(){
 		//with a preemptive feature
 		
 		PNeditorApplication app = mock(PNeditorApplication.class);
 		when(app.getActiveDocument()).thenReturn(doc);	
-		expecteds.clear();
-		actuals.clear();
+		
 		doc.addResource("cpu");
-		Transition t2 = new Transition("transition2", new Point(10,10));
-		t2.addFeature(new PreemptiveTransitionFeature(app));
+		
+		t1.addFeature(new PreemptiveTransitionFeature(app));
 		expecteds.add("name");
-		for (IFeature f: t2.getFeatures()){
+		for (IFeature f: t1.getFeatures()){
 			for (IFeatureProperty fp: f.getProperties() ){
 				expecteds.add(fp.getDisplayName());
 			}
 		}	
 
-		doc.getSelectionModel().select(t2,true);
+		doc.getSelectionModel().select(t1,true);
 		testObj.activate(doc);
 		testObj.createSheet();	
 		
@@ -152,12 +173,12 @@ public class PropertiesDockBarTest {
 		}
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));		
-		doc.getSelectionModel().clearSelection();
+	}
+	@Test
+	public void test4(){
 		
-		//stress test
+		//stress test		
 		
-		expecteds.clear();
-		actuals.clear();
 		for (int i=0; i<150; i++){
 			Transition t = new Transition("t"+i, new Point (i,i));
 			t.addFeature(new TimedTransitionFeature(null));
@@ -178,7 +199,6 @@ public class PropertiesDockBarTest {
 		
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));	
-		doc.getSelectionModel().clearSelection();
-	}
+		}
 
 }

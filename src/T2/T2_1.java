@@ -15,6 +15,7 @@ import org.junit.Test;
 import com.l2fprod.common.propertysheet.Property;
 
 
+import pNeditor.IFeatureFactory;
 import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
@@ -37,7 +38,9 @@ public class T2_1 {
 	private static PropertiesDockBar pDock;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
-	
+	private static ArrayList<String> expecteds;
+	private static ArrayList<String> actuals;
+	private Property[] properties;
 	/**
 	 * set up the main classes needed in order to create a document 
 	 * and add elements to it and perform operations on them
@@ -58,26 +61,30 @@ public class T2_1 {
 		view.initializeView(null, doc);
 		
 		pDock = new PropertiesDockBar();
+		expecteds = new ArrayList<String>();
+		actuals = new ArrayList<String>();
 	}
 
+	@Before
+	public void before(){
+		
+	}
+	
+	@After
+	public void after(){
+		
+		expecteds.clear();
+		actuals.clear();	
+		doc.getSelectionModel().clearSelection();	
+	}
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
-	public void test() {
+	public void test1() {	
 		
-		ArrayList<String> expecteds = new ArrayList<String>();
-		ArrayList<String> actuals = new ArrayList<String>();
-		Property[] properties;
 		//the element selected is a transition without features
 		
 		Transition t1 = new Transition("transition1", new Point(0,0));
@@ -87,19 +94,22 @@ public class T2_1 {
 		pDock.createSheet();
 		
 		expecteds.add("name");
-		 properties = pDock.getSheet().getProperties();
+		properties = pDock.getSheet().getProperties();
 			
-			for (int i=0; i<properties.length;i++){
-				actuals.add(properties[i].getDisplayName());
-			}
-			assertEquals(expecteds.size(), actuals.size());
-			assertTrue(actuals.containsAll(expecteds));	
-		expecteds.clear();
-		actuals.clear();	
-		doc.getSelectionModel().clearSelection();
+		for (int i=0; i<properties.length;i++){
+			actuals.add(properties[i].getDisplayName());
+		}
+		assertEquals(expecteds.size(), actuals.size());
+		assertTrue(actuals.containsAll(expecteds));		
+		
+	}
+	
+	@Test
+	public void test2(){
 		
 		//the element selected is a transition with two features
 		
+		Transition t1 = new Transition("transition1", new Point(0,0));
 		t1.addFeature(new TimedTransitionFeature(null));
 		t1.addFeature(new StochasticTransitionFeature());
 		doc.getSelectionModel().select(t1, true);
@@ -112,17 +122,18 @@ public class T2_1 {
 		
 		pDock.activate(doc);
 		pDock.createSheet();
-		 properties = pDock.getSheet().getProperties();
-			
-			for (int i=0; i<properties.length;i++){
-				actuals.add(properties[i].getDisplayName());
-			}
-			
-			assertEquals(expecteds.size(), actuals.size());
-			assertTrue(actuals.containsAll(expecteds));	
-		expecteds.clear();
-		actuals.clear();	
-		doc.getSelectionModel().clearSelection();
+		properties = pDock.getSheet().getProperties();
+		
+		for (int i=0; i<properties.length;i++){
+			actuals.add(properties[i].getDisplayName());
+		}
+		
+		assertEquals(expecteds.size(), actuals.size());
+		assertTrue(actuals.containsAll(expecteds));	
+		
+	}
+	@Test
+	public void test3(){
 		
 		//the element selected is a place
 		
@@ -137,17 +148,11 @@ public class T2_1 {
 		properties = pDock.getSheet().getProperties();
 		
 		for (int i=0; i<properties.length;i++){
-			actuals.add(properties[i].getDisplayName());
-			
+			actuals.add(properties[i].getDisplayName());			
 		}
 		
 		assertEquals(expecteds.size(), actuals.size());
-		assertTrue(actuals.containsAll(expecteds));	
-		expecteds.clear();
-		actuals.clear();	
-		doc.getSelectionModel().clearSelection();
-		
-		
+		assertTrue(actuals.containsAll(expecteds));			
 	}
 
 }

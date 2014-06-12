@@ -71,7 +71,7 @@ public class T1_3 {
 		doc.deleteFeature(ttff, plugin.getFeatureFactory(), null);
 		assertFalse(t1.hasFeature("Timed Transition"));
 		
-		//the preemptive feature has been mocked
+		//the preemptive feature is mocked
 		
 		String[] dependencies = {"Timed Transition"};
 		PreemptiveTransitionFeatureFactory ptff = mock(PreemptiveTransitionFeatureFactory.class);

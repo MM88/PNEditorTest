@@ -35,7 +35,7 @@ public class TimedTransitionFeatureTest {
 
 	@Test
 	public void testTimedTransitionFeature() {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(null);
 		assertNotNull(myTimed);
 		String expectedName = "Timed Transition";
 		assertEquals(expectedName, myTimed.getName());
@@ -44,7 +44,7 @@ public class TimedTransitionFeatureTest {
 	
 	@Test
 	public void testGetText() {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(null);
 		Double expectedEFT = (double) 1.2;
 		Double expectedLFT = (double) 1.5;
 		myTimed.setEFT(expectedEFT);
@@ -55,7 +55,7 @@ public class TimedTransitionFeatureTest {
 
 	@Test
 	public void testSetGetEFT() {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(null);
 		assertNotNull(myTimed);
 		Double expectedEFT = (double) 0;
 		assertEquals(expectedEFT, myTimed.getEFT());
@@ -67,7 +67,7 @@ public class TimedTransitionFeatureTest {
 
 	@Test
 	public void testSetGetLFT() {
-		TimedTransitionFeature myTimed = new TimedTransitionFeature();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(null);
 		assertNotNull(myTimed);
 		Double expectedLFT = (double) 0;
 		assertEquals(expectedLFT, myTimed.getLFT());

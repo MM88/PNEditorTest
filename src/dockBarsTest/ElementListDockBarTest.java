@@ -36,6 +36,9 @@ public class ElementListDockBarTest {
 	private static ElementListDockBar testObj = null;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
+	private static ArrayList<PNelement> expecteds;
+	private static ArrayList<PNelement> actuals;
+	private IContentProvider cp;
 	
 	/**
 	 * set up the main classes needed in order to create a document 
@@ -56,8 +59,19 @@ public class ElementListDockBarTest {
 		view.initializeView(null, doc);
 		
 		testObj = new ElementListDockBar();
+		
+		expecteds = new ArrayList<PNelement>();
+		actuals = new ArrayList<PNelement>();
 	}
 
+	@After
+	public void after(){
+		
+		expecteds.clear();
+		actuals.clear();
+		
+		doc.getSelectionModel().clearSelection();
+	}
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
@@ -69,11 +83,9 @@ public class ElementListDockBarTest {
 	 * then its done a stress test based on the number of element in the net
 	 */
 	@Test
-	public void test() {
+	public void test1() {
 	    
-		ArrayList<PNelement> expecteds = new ArrayList<PNelement>();
-		ArrayList<PNelement> actuals = new ArrayList<PNelement>();
-		IContentProvider cp;
+		
 		Transition t1 = new Transition("transition1", new Point(0,0));
 		expecteds.add(t1);
 		Place p1 = new Place("place1", new Point(50,50));
@@ -94,10 +106,12 @@ public class ElementListDockBarTest {
 		assertTrue(actuals.containsAll(expecteds));
 		
 		doc.deleteItemsImpl(expecteds, null);
-		expecteds.clear();
-		actuals.clear();
 		
-		doc.getSelectionModel().clearSelection();
+
+	}
+	
+	@Test
+	public void test2(){
 		
 		//stress test 
 		
@@ -119,9 +133,7 @@ public class ElementListDockBarTest {
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));
 		
-		expecteds.clear();
-		actuals.clear();
-		doc.getSelectionModel().clearSelection();
+		
 	}
 
 }

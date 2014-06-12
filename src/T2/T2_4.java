@@ -41,6 +41,13 @@ public class T2_4 {
 	private static PropertiesDockBar pDock;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
+	final double DELTA = 1e-15;
+	private static PNeditorApplication app;
+	private Property[] properties;
+	private static ArrayList<String> expecteds;
+	private static ArrayList<String> actuals;
+	private Transition t1;
+	private Transition t2;
 	
 	/**
 	 * set up the main classes needed in order to create a document 
@@ -62,31 +69,43 @@ public class T2_4 {
 		view.initializeView(null, doc);
 		
 		pDock = new PropertiesDockBar();
+		expecteds = new ArrayList<String>();
+		actuals = new ArrayList<String>();
+		app = mock(PNeditorApplication.class);
+		when(app.getActiveDocument()).thenReturn(doc);
 	}
 
+	@Before
+	public void before(){
+		
+		t1 = new Transition("transition1", new Point(0,0));
+		doc.addTransitionToPetriNet(t1, null);
+		t2 = new Transition("transition2", new Point(20,20));
+		doc.addTransitionToPetriNet(t2, null);
+	}
+	
+	@After
+	public void after(){
+		
+		expecteds.clear();
+		actuals.clear();	
+		doc.getSelectionModel().clearSelection();	
+	}
+	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
 
 
 	@Test
-	public void test() throws PropertyVetoException {
-		final double DELTA = 1e-15;
-		PNeditorApplication app = mock(PNeditorApplication.class);
-		when(app.getActiveDocument()).thenReturn(doc);
-		ArrayList<String> expecteds = new ArrayList<String>();
-		ArrayList<String> actuals = new ArrayList<String>();
-		Property[] properties;
-		
+	public void test1() throws PropertyVetoException {
+				
 		//the elements selected are two transition with the same features
-		
-		Transition t1 = new Transition("transition1", new Point(0,0));
-		doc.addTransitionToPetriNet(t1, null);
+		 
 		t1.addFeature(new TimedTransitionFeature(app));
 		t1.addFeature(new StochasticTransitionFeature());		
 		
-		Transition t2 = new Transition("transition2", new Point(20,20));
-		doc.addTransitionToPetriNet(t2, null);
+		
 		t2.addFeature(new TimedTransitionFeature(app));
 		t2.addFeature(new StochasticTransitionFeature());
 		doc.getSelectionModel().select(t1, true);
@@ -111,9 +130,11 @@ public class T2_4 {
 		}
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));	
-		expecteds.clear();
-		actuals.clear();	
-		doc.getSelectionModel().clearSelection();
+		
+	}
+	
+	@Test
+	public void test2(){
 		
 		//the elements selected are a transition with features and a place
 		
@@ -134,11 +155,23 @@ public class T2_4 {
 		
 		assertEquals(expecteds.size(), actuals.size());
 		assertTrue(actuals.containsAll(expecteds));	
-		expecteds.clear();
-		actuals.clear();	
-		doc.getSelectionModel().clearSelection();
+		
+
+	}
+	
+	@Test
+	public void test3() throws PropertyVetoException{
 		
 		//if two elements have the same value of a property it is shown in the dockbar 
+		
+		t1.addFeature(new TimedTransitionFeature(app));
+		t1.addFeature(new StochasticTransitionFeature());		
+		
+		
+		t2.addFeature(new TimedTransitionFeature(app));
+		t2.addFeature(new StochasticTransitionFeature());
+		doc.getSelectionModel().select(t1, true);
+		doc.getSelectionModel().select(t2, true);
 		
 		for (IFeatureProperty fp : t1.getFeature("Timed Transition").getProperties()){
 			if(fp.getDisplayName().equalsIgnoreCase("LFT")){
@@ -169,7 +202,7 @@ public class T2_4 {
 			}			
 		}
 		assertEquals(expected, actual, DELTA);
-		doc.getSelectionModel().clearSelection();
+		
 	}
 
 }
