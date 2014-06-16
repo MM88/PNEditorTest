@@ -88,66 +88,74 @@ public class ResourcePriorityPropertyTest {
 		assertEquals(3, myRpp.readValue());				
 	}
 
-	
-
 	@Test
 	public void testGetErrorMessage() {
-		fail("Not yet implemented");
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertNull(myRpp.getErrorMessage());
 	}
 
 	@Test
-	public void testGetName() {
-		fail("Not yet implemented");
+	public void testSetGetName() {
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertEquals(expName, myRpp.getName());
+		expName = "alu";
+		myRpp.setName(expName);
+		String actName = myRpp.getName();
+		assertEquals(expName, actName);
 	}
 
 	@Test
-	public void testSetName() {
-		fail("Not yet implemented");
+	public void testSetGetDisplayName() {
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertEquals(expName, myRpp.getDisplayName());
+		expName = "alu";
+		myRpp.setDisplayName(expName);
+		String actName = myRpp.getDisplayName();
+		assertEquals(expName, actName);
 	}
 
 	@Test
-	public void testGetDisplayName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetDisplayName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetType() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetType() {
-		fail("Not yet implemented");
+	public void testSetGetType() {
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		Class expType = String.class;
+		assertEquals(expType, myRpp.getType());
+		expType = Integer.class;
+		myRpp.setType(Integer.class);
+		Class actType = myRpp.getType();
+		assertEquals(expType, actType);
 	}
 
 	@Test
 	public void testIsEditable() {
-		fail("Not yet implemented");
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertTrue(myRpp.isEditable());
 	}
 
 	@Test
 	public void testSetEditable() {
-		fail("Not yet implemented");
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertTrue(myRpp.isEditable());
+		myRpp.setEditable(false);
+		assertFalse(myRpp.isEditable());
 	}
 
-	@Test
-	public void testGetCategory() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetCategory() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEditorClass() {
-		fail("Not yet implemented");
-	}
 
 }

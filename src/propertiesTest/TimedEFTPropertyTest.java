@@ -91,68 +91,81 @@ public class TimedEFTPropertyTest {
 		myEft.writeValue(newValue);
 		assertEquals(3.4, myEft.readValue());
 	}
-	
 
 	@Test
 	public void testGetErrorMessage() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
+		assertEquals("",myEft.getErrorMessage());
 	}
 
 	@Test
-	public void testGetName() {
-		fail("Not yet implemented");
+	public void testSetGetName() {
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
+		String expName = "EFT Timed";
+		assertEquals(expName, myEft.getName());
+		expName = "EFT";
+		myEft.setName(expName);
+		String actName = myEft.getName();
+		assertEquals(expName, actName);
 	}
 
 	@Test
-	public void testSetName() {
-		fail("Not yet implemented");
+	public void testSetGetDisplayName() {
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
+		String expDisplayName = "EFT";
+		assertEquals(expDisplayName, myEft.getDisplayName());
+		expDisplayName = "EFT Timed";
+		myEft.setDisplayName(expDisplayName);
+		String actName = myEft.getDisplayName();
+		assertEquals(expDisplayName, actName);
 	}
 
 	@Test
-	public void testGetDisplayName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetDisplayName() {
-		fail("Not yet implemented");
-	} 
-
-	@Test
-	public void testGetType() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetType() {
-		fail("Not yet implemented");
+	public void testSetGetType() {
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
+		Class expType = String.class;
+		assertEquals(expType, myEft.getType());
+		expType = Integer.class;
+		myEft.setType(Integer.class);
+		Class actType = myEft.getType();
+		assertEquals(expType, actType);
 	}
 
 	@Test
 	public void testIsEditable() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
+		assertTrue(myEft.isEditable());
 	}
 
 	@Test
 	public void testSetEditable() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
+		assertTrue(myEft.isEditable());
+		myEft.setEditable(false);
+		assertFalse(myEft.isEditable());
 	}
-
-	@Test
-	public void testGetCategory() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetCategory() {
-		fail("Not yet implemented");
-	}
-
-
-
-	@Test
-	public void testGetEditorClass() {
-		fail("Not yet implemented");
-	}
-
 }

@@ -94,53 +94,78 @@ public class TimedLTFPropertyTest {
 
 	@Test
 	public void testGetErrorMessage() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
+		assertEquals("",myLft.getErrorMessage());
 	}
 
 	@Test
 	public void testSetGetName() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
+		String expName = "LFT Timed";
+		assertEquals(expName, myLft.getName());
+		expName = "LFT";
+		myLft.setName(expName);
+		String actName = myLft.getName();
+		assertEquals(expName, actName);
 	}
-
-	
 
 	@Test
 	public void testSetGetDisplayName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetDisplayName() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
+		String expDisplayName = "LFT";
+		assertEquals(expDisplayName, myLft.getDisplayName());
+		expDisplayName = "LFT Timed";
+		myLft.setDisplayName(expDisplayName);
+		String actName = myLft.getDisplayName();
+		assertEquals(expDisplayName, actName);
 	}
 
 	@Test
 	public void testSetGetType() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
+		Class expType = String.class;
+		assertEquals(expType, myLft.getType());
+		expType = Integer.class;
+		myLft.setType(Integer.class);
+		Class actType = myLft.getType();
+		assertEquals(expType, actType);
 	}
-
-	
 
 	@Test
 	public void testIsEditable() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
+		assertTrue(myLft.isEditable());
 	}
 
 	@Test
 	public void testSetEditable() {
-		fail("Not yet implemented");
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
+		assertTrue(myLft.isEditable());
+		myLft.setEditable(false);
+		assertFalse(myLft.isEditable());
 	}
-
-	@Test
-	public void testSetGetCategory() {
-		fail("Not yet implemented");
-	}
-
-
-
-	@Test
-	public void testGetEditorClass() {
-		fail("Not yet implemented");
-	}
-
 }

@@ -95,62 +95,74 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testGetErrorMessage() {
-		fail("Not yet implemented");
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		assertNotNull(myEft);
+		assertEquals("",myEft.getErrorMessage());
 	}
 
 	@Test
-	public void testGetName() {
-		fail("Not yet implemented");
+	public void testSetGetName() {
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		String expName = "EFT Stochastic";
+		assertEquals(expName, myEft.getName());
+		expName = "EFT";
+		myEft.setName(expName);
+		String actName = myEft.getName();
+		assertEquals(expName, actName);
 	}
 
 	@Test
-	public void testSetName() {
-		fail("Not yet implemented");
+	public void testSetGetDisplayName() {
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		String expDisplayName = "EFT";
+		assertEquals(expDisplayName, myEft.getDisplayName());
+		expDisplayName = "EFT Stochastic";
+		myEft.setDisplayName(expDisplayName);
+		String actName = myEft.getDisplayName();
+		assertEquals(expDisplayName, actName);
 	}
 
 	@Test
-	public void testGetDisplayName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetDisplayName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetType() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetType() {
-		fail("Not yet implemented");
+	public void testSetGetType() {
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		Class expType = String.class;
+		assertEquals(expType, myEft.getType());
+		expType = Integer.class;
+		myEft.setType(Integer.class);
+		Class actType = myEft.getType();
+		assertEquals(expType, actType);
 	}
 
 	@Test
 	public void testIsEditable() {
-		fail("Not yet implemented");
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		assertTrue(myEft.isEditable());
 	}
 
 	@Test
 	public void testSetEditable() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetCategory() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetCategory() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEditorClass() {
-		fail("Not yet implemented");
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		assertTrue(myEft.isEditable());
+		myEft.setEditable(false);
+		assertFalse(myEft.isEditable());
 	}
 
 }

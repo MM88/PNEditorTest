@@ -95,62 +95,74 @@ public class StochasticLFTPropertyTest {
 
 	@Test
 	public void testGetErrorMessage() {
-		fail("Not yet implemented");
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		LFTProperty myLft = myStoc.new LFTProperty();
+		assertNotNull(myLft);
+		assertEquals("",myLft.getErrorMessage());
 	}
 
 	@Test
-	public void testGetName() {
-		fail("Not yet implemented");
+	public void testSetGetName() {
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		LFTProperty myLft = myStoc.new LFTProperty();
+		String expName = "LFT Stochastic";
+		assertEquals(expName, myLft.getName());
+		expName = "LFT";
+		myLft.setName(expName);
+		String actName = myLft.getName();
+		assertEquals(expName, actName);
 	}
 
 	@Test
-	public void testSetName() {
-		fail("Not yet implemented");
+	public void testSetGetDisplayName() {
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		LFTProperty myLft = myStoc.new LFTProperty();
+		String expDisplayName = "LFT";
+		assertEquals(expDisplayName, myLft.getDisplayName());
+		expDisplayName = "LFT Stochastic";
+		myLft.setDisplayName(expDisplayName);
+		String actName = myLft.getDisplayName();
+		assertEquals(expDisplayName, actName);
 	}
 
 	@Test
-	public void testGetDisplayName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetDisplayName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetType() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetType() {
-		fail("Not yet implemented");
+	public void testSetGetType() {
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		LFTProperty myLft = myStoc.new LFTProperty();
+		Class expType = String.class;
+		assertEquals(expType, myLft.getType());
+		expType = Integer.class;
+		myLft.setType(Integer.class);
+		Class actType = myLft.getType();
+		assertEquals(expType, actType);
 	}
 
 	@Test
 	public void testIsEditable() {
-		fail("Not yet implemented");
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		LFTProperty myLft = myStoc.new LFTProperty();
+		assertTrue(myLft.isEditable());
 	}
 
 	@Test
 	public void testSetEditable() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetCategory() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetCategory() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEditorClass() {
-		fail("Not yet implemented");
+		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
+		assertNotNull(myStoc);
+		t.addFeature(myStoc);
+		LFTProperty myLft = myStoc.new LFTProperty();
+		assertTrue(myLft.isEditable());
+		myLft.setEditable(false);
+		assertFalse(myLft.isEditable());
 	}
 
 }
