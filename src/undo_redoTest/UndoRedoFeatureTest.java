@@ -217,6 +217,59 @@ public class UndoRedoFeatureTest {
 		assertEquals(tFeatures.size(), actualFeatures.size());	
 	}
 	
+	@Test
+	public void testUndoRedoRemovalOnePreemtiveFeature() {
+		Point position = new Point (0,0);
+		Transition t = new Transition("transition0",
+				position);
+		Set<IFeature> transitionFeatures = t.getFeatures();
+		assertEquals(transitionFeatures.size(), 0);
+		myDoc.getSelectionModel().select(t, true);
+		IFeature myPree = new PreemptiveTransitionFeature(mockedApp);	
+		ArrayList<IFeatureFactory> factories = new ArrayList<IFeatureFactory>();
+		IFeatureFactory ptff = mock(PreemptiveTransitionFeatureFactory.class);
+		when(ptff.createFeature()).thenReturn(myPree);
+		IFeatureFactory ttff = new TimedTransitionFeatureFactory();
+		IFeatureFactory stff = new StochasticTransitionFeatureFactory();
+		factories.add(stff);
+		factories.add(ttff);
+		factories.add(ptff);
+		String[] dependencies = {"Timed Transition"};
+		when(ptff.getName()).thenReturn("Preemptive Transition");
+		when(ptff.getDependencies()).thenReturn(dependencies);
+		when(ptff.hasDependencies()).thenReturn(true);
+		IHistoryComposite hc = new HistoryComposite("crea");
+		myDoc.createFeature(ptff, factories, t, hc);
+		myDoc.getHistoryManager().addMemento(hc);
+		Set<IFeature> expectedFeatures = t.getFeatures();
+		assertEquals(expectedFeatures.size(), 2);
+		IFeature timed = t.getFeature("Timed Transition");
+		assertNotNull(timed);
+		IFeature pree = t.getFeature("Preemptive Transition");
+		assertNotNull(pree);
+		myDoc.removeFeatureFromNode(myPree, t, myDoc.getHistoryManager());
+		Set<IFeature> tFeatures = t.getFeatures();
+		assertEquals(tFeatures.size(), 1);
+		timed = t.getFeature("Timed Transition");
+		assertNotNull(timed);
+		//undoTest
+		try {
+			myDoc.getHistoryManager().undo(null);
+		} catch (HistoryException e) {
+			e.printStackTrace();
+		}
+		Set<IFeature> actualFeatures = t.getFeatures();
+		assertEquals(expectedFeatures.size(), actualFeatures.size());
+		// redo test
+		try {
+			myDoc.getHistoryManager().redo(null);
+		} catch (HistoryException e) {
+			e.printStackTrace();
+		}
+		actualFeatures = t.getFeatures();
+		assertEquals(tFeatures.size(), actualFeatures.size());
+	}
+	
 	
 	
 }

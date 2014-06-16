@@ -68,11 +68,23 @@ public class PreemptiveTransitionFeatureTest {
 		assertEquals(expPriority, actualPriority);
 	}
 	
-//	@Test
-//	public void testGetText() {
-//		fail("Not yet implemented");
-//	}
-//
+	@Test
+	public void testGetText() {
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		assertEquals("", myPree.getText());
+		String resourceName = "cpu";
+		int resourcePriority = 3;
+		myPree.addResourceToMap(resourceName, resourcePriority);
+		String expText = "\n {cpu}: 3";
+		assertEquals(expText, myPree.getText());
+		String resourceName1 = "cpu2";
+		int resourcePriority1 = 2;
+		myPree.addResourceToMap(resourceName1, resourcePriority1);
+		expText = "\n {cpu}: 3...";
+		assertEquals(expText, myPree.getText());
+	}
+
 	@Test
 	public void testAddResources() {
 		Point position = new Point (0,0);

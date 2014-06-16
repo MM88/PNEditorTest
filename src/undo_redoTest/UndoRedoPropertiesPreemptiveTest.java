@@ -22,6 +22,14 @@ import petriNetDomain.PreemptiveTransitionFeature.ResourcesProperty;
 import petriNetDomain.Transition;
 import pnEditorApp.PNeditorApplication;
 
+/**
+ * This class tests that:
+ * the edit of a property of a Preemptive Transition Feature is undoable
+ * if the edit of a property of a Preemptive Transition Feature is undone it is redoable
+ * @author Benedetta
+ *
+ */
+
 public class UndoRedoPropertiesPreemptiveTest {
 
 	private static PNeditorPlugin myPlugin;
@@ -57,14 +65,13 @@ public class UndoRedoPropertiesPreemptiveTest {
 		assertEquals(0, uExpSizePree);
 		assertEquals(0, uExpSizeMyDoc);
 		assertEquals(1, myPree.getProperties().size());		
-		//scrivo il nuovo valore
+		//write the new value
 		String newResource = "cpu";
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myRp);
 		try {
 			fPa.write((Object)newResource);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int rExpSize = myPree.getResources().size();
@@ -75,7 +82,6 @@ public class UndoRedoPropertiesPreemptiveTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(0, myPree.getResources().size());
@@ -85,7 +91,6 @@ public class UndoRedoPropertiesPreemptiveTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		rExpSize =  myPree.getResources().size();
@@ -100,9 +105,9 @@ public class UndoRedoPropertiesPreemptiveTest {
 		Point position = new Point (0,0);
 		Transition t = new Transition("transition0",
 				position);
-		Point p1 = new Point (10,10);
+		Point position1 = new Point (10,10);
 		Transition t1 = new Transition("transition1",
-				position);
+				position1);
 		myDoc.getSelectionModel().select(t, true);
 		myDoc.getSelectionModel().select(t1, true);
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
@@ -124,14 +129,14 @@ public class UndoRedoPropertiesPreemptiveTest {
 		assertEquals(0, uExpSizeMyDoc);
 		assertEquals(1, myPree.getProperties().size());
 		assertEquals(1, myPree1.getProperties().size());
-		//scrivo il nuovo valore
+		//write the new value
 		String newResource = "cpu";
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myRp);
+		fPa.addProperty(myRp1);
 		try {
 			fPa.write((Object)newResource);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		int rExpSize = myPree.getResources().size();
@@ -145,7 +150,6 @@ public class UndoRedoPropertiesPreemptiveTest {
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(0, myPree.getResources().size());
@@ -157,7 +161,6 @@ public class UndoRedoPropertiesPreemptiveTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		rExpSize =  myPree.getResources().size();
@@ -186,7 +189,6 @@ public class UndoRedoPropertiesPreemptiveTest {
 		try {
 			fPa.write((Object)newResource);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ResourcePriorityProperty myRpp = (ResourcePriorityProperty) myPree.getProperties().get(myPree.getProperties().size() -1);
@@ -196,14 +198,12 @@ public class UndoRedoPropertiesPreemptiveTest {
 		try {
 			fPa.write((Object)rexpValue);
 		} catch (PropertyVetoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(3, myRpp.readValue());
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(0, myRpp.readValue());
@@ -211,13 +211,67 @@ public class UndoRedoPropertiesPreemptiveTest {
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		assertEquals(3, myRpp.readValue());
 	}
 	
-	
+	@Test
+	public void testUndoRedoResourcesPriorityPropertyTwoTransition() {	
+		Point position = new Point (0,0);
+		Transition t = new Transition("transition0",
+				position);
+		Point position1 = new Point (10,10);
+		Transition t1 = new Transition("transition1",
+				position1);
+		myDoc.getSelectionModel().select(t, true);
+		myDoc.getSelectionModel().select(t1, true);
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		PreemptiveTransitionFeature myPree1 = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree1);
+		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
+		ResourcesProperty myRp1 = (ResourcesProperty) myPree1.getProperties().get(0);
+		t.addFeature(myPree);	
+		t1.addFeature(myPree1);	
+		String newResource = "cpu";
+		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
+		fPa.addProperty(myRp);
+		fPa.addProperty(myRp1);
+		try {
+			fPa.write((Object)newResource);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
+		ResourcePriorityProperty myRpp = (ResourcePriorityProperty) myPree.getProperties().get(myPree.getProperties().size() -1);
+		ResourcePriorityProperty myRpp1 = (ResourcePriorityProperty) myPree1.getProperties().get(myPree.getProperties().size() -1);
+		fPa = new FeaturePropertyAdapter(mockedApp);
+		fPa.addProperty(myRpp);
+		fPa.addProperty(myRpp1);
+		String rexpValue = "3";
+		try {
+			fPa.write((Object)rexpValue);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
+		assertEquals(3, myRpp.readValue());
+		assertEquals(3, myRpp1.readValue());
+		try {
+			myDoc.getHistoryManager().undo(null);
+		} catch (HistoryException e) {
+			e.printStackTrace();
+		}
+		assertEquals(0, myRpp.readValue());
+		assertEquals(0, myRpp1.readValue());
+		//redo test
+		try {
+			myDoc.getHistoryManager().redo(null);
+		} catch (HistoryException e) {
+			e.printStackTrace();
+		}
+		assertEquals(3, myRpp.readValue());
+		assertEquals(3, myRpp1.readValue());
+	}
 	
 	
 	

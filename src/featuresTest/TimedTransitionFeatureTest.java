@@ -32,6 +32,14 @@ public class TimedTransitionFeatureTest {
 		myTimed.setLFT(expectedLFT);
 		String expectedText = "["+ expectedEFT + "," + expectedLFT + "]";
 		assertEquals(expectedText, myTimed.getText());
+		Double eft = (double)3.0;
+		Double ltf = (double)7.0;
+		myTimed.setEFT(eft);
+		myTimed.setLFT(ltf);
+		int expEFT = eft.intValue();
+		int expLtf = ltf.intValue();
+		expectedText = "["+ expEFT + "," + expLtf + "]";
+		assertEquals(expectedText, myTimed.getText());
 	}
 
 	@Test

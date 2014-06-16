@@ -30,11 +30,19 @@ public class StochasticTransitionFeatureTest {
 		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(null);
 		String expectedFdt = "exponential";  // can add the other cases
 		myStoc.setFdt(expectedFdt);
-		Double expectedEFT = (double) 3.5;
-		Double expectedLFT = (double) 7.5;
+		Double expectedEFT = (double)3.5;
+		Double expectedLFT = (double)7.5;
 		myStoc.setEFT(expectedEFT);
 		myStoc.setLFT(expectedLFT);
 		String expectedText = "["+ expectedEFT + "," + expectedLFT + "]" + "Exp";
+		assertEquals(expectedText, myStoc.getText());
+		Double eft = (double)3.0;
+		Double ltf = (double)7.0;
+		myStoc.setEFT(eft);
+		myStoc.setLFT(ltf);
+		int expEFT = eft.intValue();
+		int expLtf = ltf.intValue();
+		expectedText = "["+ expEFT + "," + expLtf + "]" + "Exp";
 		assertEquals(expectedText, myStoc.getText());
 	}
 	
