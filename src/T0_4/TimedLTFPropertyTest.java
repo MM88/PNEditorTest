@@ -89,7 +89,8 @@ public class TimedLTFPropertyTest {
 		assertNotNull(myLft);
 		String newValue = "3.4";
 		myLft.writeValue(newValue);
-		assertEquals(3.4, myLft.readValue());
+		double expValue = 3.4;
+		assertEquals(expValue, myLft.readValue());
 	}
 
 	@Test

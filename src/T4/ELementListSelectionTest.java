@@ -62,11 +62,13 @@ public class ELementListSelectionTest {
 		myEldock.activate(myDoc);
 		IContentProvider cp = myEldock.getViewer().getContentProvider();
 		int nEl = cp.getChildrenCount(myDoc);
-		assertEquals(2, nEl);
+		int expSize = 2;
+		assertEquals(expSize, nEl);
 		myEldock.updateView(myDoc, null);
 		myEldock.getSelectionListener().valueChanged(null);
 		int selectedEl = myEldock.getViewer().getSelectedValues().length;
-		assertEquals(1, selectedEl);
+		expSize = 1;
+		assertEquals(expSize, selectedEl);
 		assertEquals(Transition.class,myEldock.getViewer().getSelectedValue().getClass());
 		//more elements 
 		Point p1 = new Point(20,20);
@@ -78,9 +80,11 @@ public class ELementListSelectionTest {
 		myEldock.getSelectionListener().valueChanged(null);
 		cp = myEldock.getViewer().getContentProvider();
 		nEl = cp.getChildrenCount(myDoc);
-		assertEquals(3, nEl);
+		expSize = 3;
+		assertEquals(expSize, nEl);
 		selectedEl = myEldock.getViewer().getSelectedValues().length;
-		assertEquals(2, selectedEl);
+		expSize = 2;
+		assertEquals(expSize, selectedEl);
 	}
 	
 	@Test
@@ -94,7 +98,8 @@ public class ELementListSelectionTest {
 		myEldock.activate(myDoc);
 		myEldock.updateView(myDoc, null);
 		myEldock.getViewer().getSelectionModel().setSelectionInterval(0, 0);
-		assertEquals(1,myDoc.getSelectionModel().getSelectedItems().size());
+		int expSize = 1;
+		assertEquals(expSize, myDoc.getSelectionModel().getSelectedItems().size());
 	}
 	
 	@Test

@@ -71,7 +71,8 @@ public class UndoRedoFeatureTest {
 		IFeature ft = new TimedTransitionFeature(null);
 		myDoc.addFeatureToNode(ft, t, myDoc.getHistoryManager());
 		Set<IFeature> transitionFeatures = t.getFeatures();
-		assertEquals(transitionFeatures.size(), 1);
+		int expSize = 1;
+		assertEquals(expSize, transitionFeatures.size());
 		//undoTest
 		try {
 			myDoc.getHistoryManager().undo(null);
@@ -96,7 +97,8 @@ public class UndoRedoFeatureTest {
 		Transition t = new Transition("transition0",
 				position);
 		Set<IFeature> expectedFeatures = t.getFeatures();
-		assertEquals(expectedFeatures.size(), 0);
+		int expSize = 0;
+		assertEquals(expSize, expectedFeatures.size());
 		myDoc.getSelectionModel().select(t, true);
 		IFeature myPree = new PreemptiveTransitionFeature(mockedApp);	
 		ArrayList<IFeatureFactory> factories = new ArrayList<IFeatureFactory>();
@@ -115,7 +117,8 @@ public class UndoRedoFeatureTest {
 		myDoc.createFeature(ptff, factories, t, hc);
 		myDoc.getHistoryManager().addMemento(hc);
 		Set<IFeature> transitionFeatures = t.getFeatures();
-		assertEquals(transitionFeatures.size(), 2);
+		expSize = 2;
+		assertEquals(expSize, transitionFeatures.size());
 		IFeature timed = t.getFeature("Timed Transition");
 		assertNotNull(timed);
 		IFeature pree = t.getFeature("Preemptive Transition");
@@ -147,9 +150,10 @@ public class UndoRedoFeatureTest {
 		Transition t1 = new Transition(new String("transition1"),
 				p1);
 		Set<IFeature> expFt = t.getFeatures();
-		assertEquals(expFt.size(), 0);
+		int expSize = 0;
+		assertEquals(expSize, expFt.size());
 		Set<IFeature> expFt1 = t1.getFeatures();
-		assertEquals(expFt1.size(), 0);
+		assertEquals(expSize, expFt1.size());
 		ArrayList<PNelement> pnel = new ArrayList<PNelement>();
 		pnel.add(t);
 		pnel.add(t1);
@@ -161,8 +165,9 @@ public class UndoRedoFeatureTest {
 		myDoc.getHistoryManager().addMemento(hc);
 		Set<IFeature> tFeatures = t.getFeatures();
 		Set<IFeature> t1Features = t1.getFeatures();
-		assertEquals(tFeatures.size(), 1);
-		assertEquals(t1Features.size(), 1);
+		expSize = 1;
+		assertEquals(expSize, tFeatures.size());
+		assertEquals(expSize, t1Features.size());
 		//undoTest
 		try {
 			myDoc.getHistoryManager().undo(null);
@@ -191,14 +196,17 @@ public class UndoRedoFeatureTest {
 		Transition t = new Transition(new String("transition0"),
 				position);
 		Set<IFeature> initFeatures = t.getFeatures();
-		assertEquals(initFeatures.size(), 0);
+		int expSize = 0;
+		assertEquals(expSize, initFeatures.size());
 		IFeature ft = new TimedTransitionFeature(null);
 		t.addFeature(ft);
 		Set<IFeature> expectedFeatures = t.getFeatures();
-		assertEquals(expectedFeatures.size(), 1);
+		expSize = 1;
+		assertEquals(expSize, expectedFeatures.size());
 		myDoc.removeFeatureFromNode(ft, t, myDoc.getHistoryManager());
 		Set<IFeature> tFeatures = t.getFeatures();
-		assertEquals(tFeatures.size(), 0);
+		expSize = 0;
+		assertEquals(expSize, tFeatures.size());
 		//undoTest
 		try {
 			myDoc.getHistoryManager().undo(null);
@@ -223,7 +231,8 @@ public class UndoRedoFeatureTest {
 		Transition t = new Transition("transition0",
 				position);
 		Set<IFeature> transitionFeatures = t.getFeatures();
-		assertEquals(transitionFeatures.size(), 0);
+		int expSize = 0;
+		assertEquals(expSize, transitionFeatures.size());
 		myDoc.getSelectionModel().select(t, true);
 		IFeature myPree = new PreemptiveTransitionFeature(mockedApp);	
 		ArrayList<IFeatureFactory> factories = new ArrayList<IFeatureFactory>();
@@ -242,14 +251,16 @@ public class UndoRedoFeatureTest {
 		myDoc.createFeature(ptff, factories, t, hc);
 		myDoc.getHistoryManager().addMemento(hc);
 		Set<IFeature> expectedFeatures = t.getFeatures();
-		assertEquals(expectedFeatures.size(), 2);
+		expSize = 2;
+		assertEquals(expSize, expectedFeatures.size());
 		IFeature timed = t.getFeature("Timed Transition");
 		assertNotNull(timed);
 		IFeature pree = t.getFeature("Preemptive Transition");
 		assertNotNull(pree);
 		myDoc.removeFeatureFromNode(myPree, t, myDoc.getHistoryManager());
 		Set<IFeature> tFeatures = t.getFeatures();
-		assertEquals(tFeatures.size(), 1);
+		expSize = 1;
+		assertEquals(expSize, tFeatures.size());
 		timed = t.getFeature("Timed Transition");
 		assertNotNull(timed);
 		//undoTest

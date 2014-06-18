@@ -22,7 +22,8 @@ public class StochasticTransitionFeatureTest {
 		assertNotNull(myStoc);
 		String expectedName = "Stochastic Transition";
 		assertEquals(expectedName, myStoc.getName());
-		assertEquals(3,myStoc.getProperties().size());
+		int expSize = 3;
+		assertEquals(expSize, myStoc.getProperties().size());
 	}
 
 	@Test

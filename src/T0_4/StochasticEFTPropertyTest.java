@@ -90,7 +90,8 @@ public class StochasticEFTPropertyTest {
 		myStoc.setLFT(4.5);
 		String newValue = "3.4";
 		myEft.writeValue(newValue);
-		assertEquals(3.4, myEft.readValue());
+		double expValue = 3.4;
+		assertEquals(expValue, myEft.readValue());
 	}
 
 	@Test

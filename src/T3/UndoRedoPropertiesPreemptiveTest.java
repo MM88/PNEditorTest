@@ -62,9 +62,11 @@ public class UndoRedoPropertiesPreemptiveTest {
 		t.addFeature(myPree);
 		int uExpSizePree = myPree.getResources().size();
 		int uExpSizeMyDoc = myDoc.getResources().size();
-		assertEquals(0, uExpSizePree);
-		assertEquals(0, uExpSizeMyDoc);
-		assertEquals(1, myPree.getProperties().size());		
+		int expSize = 0;
+		assertEquals(expSize, uExpSizePree);
+		assertEquals(expSize, uExpSizeMyDoc);
+		expSize = 1;
+		assertEquals(expSize, myPree.getProperties().size());		
 		//write the new value
 		String newResource = "cpu";
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
@@ -76,17 +78,21 @@ public class UndoRedoPropertiesPreemptiveTest {
 		}
 		int rExpSize = myPree.getResources().size();
 		int rExpSizeDoc = myDoc.getResources().size();
-		assertEquals(1, rExpSize);
-		assertEquals(1, rExpSizeDoc);
-		assertEquals(2, myPree.getProperties().size());
+		expSize = 1;
+		assertEquals(expSize, rExpSize);
+		assertEquals(expSize, rExpSizeDoc);
+		expSize = 2;
+		assertEquals(expSize, myPree.getProperties().size());
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
 			e.printStackTrace();
 		}
-		assertEquals(0, myPree.getResources().size());
-		assertEquals(0, myDoc.getResources().size());
-		assertEquals(1, myPree.getProperties().size());
+		expSize = 0;
+		assertEquals(expSize, myPree.getResources().size());
+		assertEquals(expSize, myDoc.getResources().size());
+		expSize = 1;
+		assertEquals(expSize, myPree.getProperties().size());
 		//redo test
 		try {
 			myDoc.getHistoryManager().redo(null);
@@ -95,9 +101,11 @@ public class UndoRedoPropertiesPreemptiveTest {
 		}
 		rExpSize =  myPree.getResources().size();
 		rExpSizeDoc =  myDoc.getResources().size();
-		assertEquals(1, rExpSize);
-		assertEquals(1, rExpSizeDoc);
-		assertEquals(2, myPree.getProperties().size());
+		expSize = 1;
+		assertEquals(expSize, rExpSize);
+		assertEquals(expSize, rExpSizeDoc);
+		expSize = 2;
+		assertEquals(expSize, myPree.getProperties().size());
 	}
 	
 	@Test
@@ -124,11 +132,13 @@ public class UndoRedoPropertiesPreemptiveTest {
 		int uExpSizePree = myPree.getResources().size();		
 		int uExpSizePree1 = myPree1.getResources().size();
 		int uExpSizeMyDoc = myDoc.getResources().size();
-		assertEquals(0, uExpSizePree);
-		assertEquals(0, uExpSizePree1);
-		assertEquals(0, uExpSizeMyDoc);
-		assertEquals(1, myPree.getProperties().size());
-		assertEquals(1, myPree1.getProperties().size());
+		int expSize = 0;
+		assertEquals(expSize, uExpSizePree);
+		assertEquals(expSize, uExpSizePree1);
+		assertEquals(expSize, uExpSizeMyDoc);
+		expSize = 1;
+		assertEquals(expSize, myPree.getProperties().size());
+		assertEquals(expSize, myPree1.getProperties().size());
 		//write the new value
 		String newResource = "cpu";
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
@@ -142,21 +152,24 @@ public class UndoRedoPropertiesPreemptiveTest {
 		int rExpSize = myPree.getResources().size();
 		int rExpSize1 = myPree1.getResources().size();
 		int rExpSizeDoc = myDoc.getResources().size();
-		assertEquals(1, rExpSize);
-		assertEquals(1, rExpSize1);
-		assertEquals(1, rExpSizeDoc);
-		assertEquals(2, myPree.getProperties().size());
-		assertEquals(2, myPree1.getProperties().size());
+		assertEquals(expSize, rExpSize);
+		assertEquals(expSize, rExpSize1);
+		assertEquals(expSize, rExpSizeDoc);
+		expSize = 2;
+		assertEquals(expSize, myPree.getProperties().size());
+		assertEquals(expSize, myPree1.getProperties().size());
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
 			e.printStackTrace();
 		}
-		assertEquals(0, myPree.getResources().size());
-		assertEquals(0, myPree1.getResources().size());
-		assertEquals(0, myDoc.getResources().size());
-		assertEquals(1, myPree.getProperties().size());
-		assertEquals(1, myPree1.getProperties().size());
+		expSize = 0;
+		assertEquals(expSize, myPree.getResources().size());
+		assertEquals(expSize, myPree1.getResources().size());
+		assertEquals(expSize, myDoc.getResources().size());
+		expSize = 1;
+		assertEquals(expSize, myPree.getProperties().size());
+		assertEquals(expSize, myPree1.getProperties().size());
 		//redo test
 		try {
 			myDoc.getHistoryManager().redo(null);
@@ -166,10 +179,12 @@ public class UndoRedoPropertiesPreemptiveTest {
 		rExpSize =  myPree.getResources().size();
 		rExpSize1 = myPree1.getResources().size();
 		rExpSizeDoc =  myDoc.getResources().size();
-		assertEquals(1, rExpSize);
-		assertEquals(1, rExpSize1);
-		assertEquals(1, rExpSizeDoc);
-		assertEquals(2, myPree.getProperties().size());
+		assertEquals(expSize, rExpSize);
+		assertEquals(expSize, rExpSize1);
+		assertEquals(expSize, rExpSizeDoc);
+		expSize = 2;
+		assertEquals(expSize, myPree.getProperties().size());
+		assertEquals(expSize, myPree1.getProperties().size());
 		
 	}
 	
@@ -200,20 +215,23 @@ public class UndoRedoPropertiesPreemptiveTest {
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
-		assertEquals(3, myRpp.readValue());
+		int expValue = 3;
+		assertEquals(expValue, myRpp.readValue());
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
 			e.printStackTrace();
 		}
-		assertEquals(0, myRpp.readValue());
+		expValue = 0;
+		assertEquals(expValue, myRpp.readValue());
 		//redo test
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
 			e.printStackTrace();
 		}
-		assertEquals(3, myRpp.readValue());
+		expValue = 3;
+		assertEquals(expValue, myRpp.readValue());
 	}
 	
 	@Test
@@ -254,23 +272,26 @@ public class UndoRedoPropertiesPreemptiveTest {
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
-		assertEquals(3, myRpp.readValue());
-		assertEquals(3, myRpp1.readValue());
+		int expValue = 3;
+		assertEquals(expValue, myRpp.readValue());
+		assertEquals(expValue, myRpp1.readValue());
 		try {
 			myDoc.getHistoryManager().undo(null);
 		} catch (HistoryException e) {
 			e.printStackTrace();
 		}
-		assertEquals(0, myRpp.readValue());
-		assertEquals(0, myRpp1.readValue());
+		expValue = 0;
+		assertEquals(expValue, myRpp.readValue());
+		assertEquals(expValue, myRpp1.readValue());
 		//redo test
 		try {
 			myDoc.getHistoryManager().redo(null);
 		} catch (HistoryException e) {
 			e.printStackTrace();
 		}
-		assertEquals(3, myRpp.readValue());
-		assertEquals(3, myRpp1.readValue());
+		expValue = 3;
+		assertEquals(expValue, myRpp.readValue());
+		assertEquals(expValue, myRpp1.readValue());
 	}
 	
 	

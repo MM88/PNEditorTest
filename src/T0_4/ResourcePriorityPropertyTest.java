@@ -85,7 +85,8 @@ public class ResourcePriorityPropertyTest {
 		assertNotNull(myRpp);
 		String expValue = "3";
 		myRpp.writeValue(expValue);
-		assertEquals(3, myRpp.readValue());				
+		int expSize = 3;
+		assertEquals(expSize, myRpp.readValue());				
 	}
 
 	@Test

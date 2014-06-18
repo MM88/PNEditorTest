@@ -78,14 +78,16 @@ public class ResourcesPropertyTest {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
 		t.addFeature(myPree);
-		assertEquals(0, myPree.getResources().size());
+		int expSize = 0;
+		assertEquals(expSize, myPree.getResources().size());
 		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myRp);
 		String expName = "cpu";
 		fPa.write(expName);
-		assertEquals(1, myDoc.getResources().size());
-		assertEquals(1, myPree.getResources().size());
+		expSize = 1;
+		assertEquals(expSize, myDoc.getResources().size());
+		assertEquals(expSize, myPree.getResources().size());
 		
 	}
 

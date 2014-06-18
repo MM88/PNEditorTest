@@ -51,7 +51,8 @@ public class PreemptiveTransitionFeatureTest {
 		String expectedName = "Preemptive Transition";
 		assertEquals(expectedName, myPree.getName());
 		ArrayList<IFeatureProperty> actualProperties = myPree.getProperties();
-		assertEquals(1, actualProperties.size());
+		int expSize = 1;
+		assertEquals(expSize, actualProperties.size());
 		Map<String, Integer> resources = myPree.getResources();
 		assertNotNull(resources);
 	}
@@ -103,7 +104,8 @@ public class PreemptiveTransitionFeatureTest {
 		String expResource2 = "cpu2";
 		myDoc.addResource(expResource2);
 		myPree.addResources();
-		assertEquals(3, myPree.getProperties().size());
+		int expSize = 3;
+		assertEquals(expSize, myPree.getProperties().size());
 		IFeatureProperty actualProperty2 = fp.get(fp.size() - 1);
 		assertEquals(expResource2, ((ResourcePriorityProperty)actualProperty2).getName());
 		actualProperty = fp.get(fp.size() - 2);
@@ -127,12 +129,14 @@ public class PreemptiveTransitionFeatureTest {
 				position);
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);	
 		assertNotNull(myPree);
-		assertEquals(1, myPree.getProperties().size());
+		int expSize = 1;
+		assertEquals(expSize, myPree.getProperties().size());
 		t.addFeature(myPree);
 		myDoc.getSelectionModel().select(t, true);
 		myDoc.addResource("cpu");
 		ArrayList<IFeatureProperty> actualProperties = myPree.getProperties();
-		assertEquals(2, actualProperties.size());
+		expSize = 2;
+		assertEquals(expSize, actualProperties.size());
 	}
 
 }

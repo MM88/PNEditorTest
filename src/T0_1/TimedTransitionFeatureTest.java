@@ -20,7 +20,8 @@ public class TimedTransitionFeatureTest {
 		assertNotNull(myTimed);
 		String expectedName = "Timed Transition";
 		assertEquals(expectedName, myTimed.getName());
-		assertEquals(2,myTimed.getProperties().size());
+		int expSize = 2;
+		assertEquals(expSize,myTimed.getProperties().size());
 	}
 	
 	@Test
