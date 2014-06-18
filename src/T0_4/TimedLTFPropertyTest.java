@@ -1,4 +1,4 @@
-package propertiesTest;
+package T0_4;
 
 import static org.junit.Assert.*;
 
@@ -12,19 +12,18 @@ import org.mockito.Mockito;
 import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
-import petriNetDomain.StochasticTransitionFeature;
+import petriNetDomain.TimedTransitionFeature;
+import petriNetDomain.TimedTransitionFeature.LTFProperty;
 import petriNetDomain.Transition;
-import petriNetDomain.StochasticTransitionFeature.LFTProperty;
 import pnEditorApp.PNeditorApplication;
 
-
 /**
- * This class tests the basic functioning of the class {@link LFTProperty} of the class {@link StochasticTransitionFeature}
+ * This class tests the basic functioning of the class {@link LTFProperty} of the class {@link TimedTransitionFeature}
  * @author Benedetta
  *
  */
 
-public class StochasticLFTPropertyTest {
+public class TimedLTFPropertyTest {
 
 	private static PNeditorPlugin myPlugin;
 	private static PNeditorDocument myDoc;
@@ -49,14 +48,14 @@ public class StochasticLFTPropertyTest {
 
 	@Test
 	public void testLTFProperty() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
 		assertNotNull(myLft);
-		String expectedName = "LFT Stochastic";
+		String expectedName = "LFT Timed";
 		assertEquals(expectedName, myLft.getName());
-		String expectedCategory = "Stochastic";
+		String expectedCategory = "Timed";
 		assertEquals(expectedCategory, myLft.getCategory());
 		String expectedDisplayName = "LFT";
 		assertEquals(expectedDisplayName, myLft.getDisplayName());
@@ -69,24 +68,24 @@ public class StochasticLFTPropertyTest {
 
 	@Test
 	public void testReadValue() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
 		assertNotNull(myLft);
-		Double expectedEft = myStoc.getLFT();
+		Double expectedEft = myTimed.getLFT();
 		assertEquals(expectedEft, myLft.readValue());
 		expectedEft = 3.2;
-		myStoc.setLFT(expectedEft);
+		myTimed.setLFT(expectedEft);
 		assertEquals(expectedEft, myLft.readValue());
 	}
 
 	@Test
 	public void testWriteValue() throws PropertyVetoException {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
 		assertNotNull(myLft);
 		String newValue = "3.4";
 		myLft.writeValue(newValue);
@@ -95,21 +94,22 @@ public class StochasticLFTPropertyTest {
 
 	@Test
 	public void testGetErrorMessage() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
 		assertNotNull(myLft);
 		assertEquals("",myLft.getErrorMessage());
 	}
 
 	@Test
 	public void testSetGetName() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
-		String expName = "LFT Stochastic";
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
+		String expName = "LFT Timed";
 		assertEquals(expName, myLft.getName());
 		expName = "LFT";
 		myLft.setName(expName);
@@ -119,13 +119,14 @@ public class StochasticLFTPropertyTest {
 
 	@Test
 	public void testSetGetDisplayName() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
 		String expDisplayName = "LFT";
 		assertEquals(expDisplayName, myLft.getDisplayName());
-		expDisplayName = "LFT Stochastic";
+		expDisplayName = "LFT Timed";
 		myLft.setDisplayName(expDisplayName);
 		String actName = myLft.getDisplayName();
 		assertEquals(expDisplayName, actName);
@@ -133,10 +134,11 @@ public class StochasticLFTPropertyTest {
 
 	@Test
 	public void testSetGetType() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
 		Class expType = String.class;
 		assertEquals(expType, myLft.getType());
 		expType = Integer.class;
@@ -147,22 +149,23 @@ public class StochasticLFTPropertyTest {
 
 	@Test
 	public void testIsEditable() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
 		assertTrue(myLft.isEditable());
 	}
 
 	@Test
 	public void testSetEditable() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		LFTProperty myLft = myStoc.new LFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.LTFProperty myLft = myTimed.new LTFProperty();
+		assertNotNull(myLft);
 		assertTrue(myLft.isEditable());
 		myLft.setEditable(false);
 		assertFalse(myLft.isEditable());
 	}
-
 }

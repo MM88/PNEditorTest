@@ -1,4 +1,4 @@
-package propertiesTest;
+package T0_4;
 
 import static org.junit.Assert.*;
 
@@ -12,19 +12,18 @@ import org.mockito.Mockito;
 import pNeditor.PNeditorDocTemplate;
 import pNeditor.PNeditorDocument;
 import pNeditor.PNeditorPlugin;
-import petriNetDomain.StochasticTransitionFeature;
-import petriNetDomain.StochasticTransitionFeature.EFTProperty;
+import petriNetDomain.TimedTransitionFeature;
+import petriNetDomain.TimedTransitionFeature.EFTProperty;
 import petriNetDomain.Transition;
 import pnEditorApp.PNeditorApplication;
 
-
 /**
- * This class tests the basic functioning of the class {@link EFTProperty} of the class {@link StochasticTransitionFeature}
+ * This class tests the basic functioning of the class {@link EFTProperty} of the class {@link TimedTransitionFeature}
  * @author Benedetta
  *
  */
 
-public class StochasticEFTPropertyTest {
+public class TimedEFTPropertyTest {
 
 	private static PNeditorPlugin myPlugin;
 	private static PNeditorDocument myDoc;
@@ -49,14 +48,14 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testEFTProperty() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
-		String expectedName = "EFT Stochastic";
+		String expectedName = "EFT Timed";
 		assertEquals(expectedName, myEft.getName());
-		String expectedCategory = "Stochastic";
+		String expectedCategory = "Timed";
 		assertEquals(expectedCategory, myEft.getCategory());
 		String expectedDisplayName = "EFT";
 		assertEquals(expectedDisplayName, myEft.getDisplayName());
@@ -68,26 +67,26 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testReadValue() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
-		Double expectedEft = myStoc.getEFT();
+		Double expectedEft = myTimed.getEFT();
 		assertEquals(expectedEft, myEft.readValue());
 		expectedEft = 3.2;
-		myStoc.setEFT(expectedEft);
+		myTimed.setEFT(expectedEft);
 		assertEquals(expectedEft, myEft.readValue());
 	}
-
+	
 	@Test
 	public void testWriteValue() throws PropertyVetoException {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
-		myStoc.setLFT(4.5);
+		myTimed.setLFT(4.5);
 		String newValue = "3.4";
 		myEft.writeValue(newValue);
 		assertEquals(3.4, myEft.readValue());
@@ -95,21 +94,22 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testGetErrorMessage() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
 		assertNotNull(myEft);
 		assertEquals("",myEft.getErrorMessage());
 	}
 
 	@Test
 	public void testSetGetName() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
-		String expName = "EFT Stochastic";
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
+		String expName = "EFT Timed";
 		assertEquals(expName, myEft.getName());
 		expName = "EFT";
 		myEft.setName(expName);
@@ -119,13 +119,14 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testSetGetDisplayName() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
 		String expDisplayName = "EFT";
 		assertEquals(expDisplayName, myEft.getDisplayName());
-		expDisplayName = "EFT Stochastic";
+		expDisplayName = "EFT Timed";
 		myEft.setDisplayName(expDisplayName);
 		String actName = myEft.getDisplayName();
 		assertEquals(expDisplayName, actName);
@@ -133,10 +134,11 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testSetGetType() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
 		Class expType = String.class;
 		assertEquals(expType, myEft.getType());
 		expType = Integer.class;
@@ -147,22 +149,23 @@ public class StochasticEFTPropertyTest {
 
 	@Test
 	public void testIsEditable() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
 		assertTrue(myEft.isEditable());
 	}
 
 	@Test
 	public void testSetEditable() {
-		StochasticTransitionFeature myStoc = new StochasticTransitionFeature(mockedApp);
-		assertNotNull(myStoc);
-		t.addFeature(myStoc);
-		StochasticTransitionFeature.EFTProperty myEft = myStoc.new EFTProperty();
+		TimedTransitionFeature myTimed = new TimedTransitionFeature(mockedApp);
+		assertNotNull(myTimed);
+		t.addFeature(myTimed);
+		TimedTransitionFeature.EFTProperty myEft = myTimed.new EFTProperty();
+		assertNotNull(myEft);
 		assertTrue(myEft.isEditable());
 		myEft.setEditable(false);
 		assertFalse(myEft.isEditable());
 	}
-
 }

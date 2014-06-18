@@ -1,4 +1,4 @@
-package dockBarsTest;
+package T0_5_6_7;
 
 import static org.junit.Assert.*;
 

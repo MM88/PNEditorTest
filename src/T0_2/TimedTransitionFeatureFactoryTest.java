@@ -1,4 +1,4 @@
-package featureFactoriesTest;
+package T0_2;
 
 import static org.junit.Assert.*;
 
@@ -23,14 +23,15 @@ import petriNetDomain.Transition;
 
 import FeatureFactories.PreemptiveTransitionFeatureFactory;
 import FeatureFactories.StochasticTransitionFeatureFactory;
+import FeatureFactories.TimedTransitionFeatureFactory;
 /**
- * This class tests the basic functioning of the class {@link StochasticTransitionFeatureFactory}
+ * This class tests the basic functioning of the class {@link TimedTransitionFeatureFactory}
  * @author Michaela
  *
  */
-public class StochasticTransitionFeatureFactoryTest {
+public class TimedTransitionFeatureFactoryTest {
 
-	private static StochasticTransitionFeatureFactory testObj;
+	private static TimedTransitionFeatureFactory testObj;
 	private static PNeditorDocument doc;
 	private static PNeditorPlugin plugin;
 	/**
@@ -41,6 +42,7 @@ public class StochasticTransitionFeatureFactoryTest {
 	 */
 	@BeforeClass
 	public static void setUp() throws Exception {
+		
 		plugin = new PNeditorPlugin();
 		plugin.initClipboard();
 		doc = new PNeditorDocument();
@@ -49,9 +51,8 @@ public class StochasticTransitionFeatureFactoryTest {
 		PNeditorView view = new PNeditorView();
 		view.setDocument(doc);
 		view.initializeView(null, doc);
-		
 	
-		testObj = new StochasticTransitionFeatureFactory();
+		testObj = new TimedTransitionFeatureFactory();
 	}
 
 	@AfterClass
@@ -60,7 +61,7 @@ public class StochasticTransitionFeatureFactoryTest {
 
 	@Test
 	public void testGetName() {
-		String actualName = "Stochastic Transition";
+		String actualName = "Timed Transition";
 		assertEquals(testObj.getName(), actualName);
 	}
 
@@ -85,10 +86,13 @@ public class StochasticTransitionFeatureFactoryTest {
 		
 		String falseDependence;
 		boolean actual;
-		falseDependence = "Timed Transition";
-		actual = testObj.isDependent(falseDependence);
+		falseDependence = "Stochastic Transition";
+		
+		actual = testObj.isDependent(falseDependence);		
 		assertFalse(actual);
-		falseDependence = "Preemptive Transition";				
+		
+		falseDependence = "Preemptive Transition";	
+		
 		actual = testObj.isDependent(falseDependence);
 		assertFalse(actual);
 	}
@@ -109,4 +113,5 @@ public class StochasticTransitionFeatureFactoryTest {
 		
 		assertFalse(testObj.isAppliableToAll(elements));
 	}
+
 }

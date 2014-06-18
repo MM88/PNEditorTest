@@ -1,4 +1,4 @@
-package propertiesTest;
+package T0_4;
 
 import static org.junit.Assert.*;
 

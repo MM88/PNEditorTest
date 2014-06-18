@@ -1,9 +1,10 @@
-package propertiesTest;
+package T0_4;
 
 import static org.junit.Assert.*;
 
 import java.awt.Point;
 import java.beans.PropertyVetoException;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,18 +16,18 @@ import pNeditor.PNeditorPlugin;
 import petriNetDomain.FeaturePropertyAdapter;
 import petriNetDomain.PreemptiveTransitionFeature;
 import petriNetDomain.Transition;
+import petriNetDomain.PreemptiveTransitionFeature.ResourcePriorityProperty;
 import petriNetDomain.PreemptiveTransitionFeature.ResourcesProperty;
 import pnEditorApp.PNeditorApplication;
 
-
 /**
- * This class tests the basic functioning of the class {@link ResourcesProperty} of the class {@link PreemptiveTransitionFeature}
+ * This class tests the basic functioning of the class {@link ResourcePriorityProperty}
  * @author Benedetta
  *
  */
 
-public class ResourcesPropertyTest {
-	
+public class ResourcePriorityPropertyTest {
+
 	private static PNeditorPlugin myPlugin;
 	private static PNeditorDocument myDoc;
 	private static PNeditorApplication mockedApp;
@@ -47,66 +48,65 @@ public class ResourcesPropertyTest {
 				position);
 		myDoc.getSelectionModel().select(t, true);
 	}
-	
-	@Test
-	public void testResourceProperty() throws PropertyVetoException {
-		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
-		assertNotNull(myPree);
-		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
-		t.addFeature(myPree);
-		String expCategory = "Preemptive";
-		assertEquals(expCategory, myRp.getCategory());
-		String expDisplayName = "Add Resource";
-		assertEquals(expDisplayName, myRp.getDisplayName());
-		assertTrue(myRp.isEditable());
-		Class expectedType = String.class;
-		assertEquals(expectedType, myRp.getType());
-		String expName = "Resources Preemptive";
-		assertEquals(expName, myRp.getName());
-	}
+
 
 	@Test
-	public void testReadValue() {
+	public void testResourcePriorityProperty() throws PropertyVetoException {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
 		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
-		assertNull(myRp.readValue());
-	}
-
-	@Test
-	public void testWriteValue() throws PropertyVetoException {
-		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
-		assertNotNull(myPree);
-		t.addFeature(myPree);
-		assertEquals(0, myPree.getResources().size());
-		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
+		t.addFeature(myPree);		
+		String expName = "cpu";
 		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
 		fPa.addProperty(myRp);
+		fPa.write((Object)expName);
+		ResourcePriorityProperty myRpp = (ResourcePriorityProperty) myPree.getProperties().get(myPree.getProperties().size() -1);
+		assertEquals(expName, myRpp.getName());
+		String expCategory = "Preemptive";
+		assertEquals(expCategory, myRpp.getCategory());
+		assertEquals(expName, myRpp.getDisplayName());
+		Class expectedType = String.class;
+		assertEquals(expectedType, myRpp.getType());
+		String expectedError = null;
+		assertEquals(expectedError, myRpp.getErrorMessage());
+	}
+
+	@Test
+	public void testWriteReadValue() throws PropertyVetoException {
+		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
+		assertNotNull(myPree);
+		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
+		t.addFeature(myPree);		
 		String expName = "cpu";
-		fPa.write(expName);
-		assertEquals(1, myDoc.getResources().size());
-		assertEquals(1, myPree.getResources().size());
-		
+		FeaturePropertyAdapter fPa = new FeaturePropertyAdapter(mockedApp);
+		fPa.addProperty(myRp);
+		fPa.write((Object)expName);
+		ResourcePriorityProperty myRpp = (ResourcePriorityProperty) myPree.getProperties().get(myPree.getProperties().size() -1);
+		assertNotNull(myRpp);
+		String expValue = "3";
+		myRpp.writeValue(expValue);
+		assertEquals(3, myRpp.readValue());				
 	}
 
 	@Test
 	public void testGetErrorMessage() {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
-		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
-		assertNull(myRp.getErrorMessage());
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertNull(myRpp.getErrorMessage());
 	}
 
 	@Test
 	public void testSetGetName() {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
-		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
-		String expName = "Resources Preemptive";
-		assertEquals(expName, myRp.getName());
-		expName = "Resources";
-		myRp.setName(expName);
-		String actName = myRp.getName();
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertEquals(expName, myRpp.getName());
+		expName = "alu";
+		myRpp.setName(expName);
+		String actName = myRpp.getName();
 		assertEquals(expName, actName);
 	}
 
@@ -114,25 +114,26 @@ public class ResourcesPropertyTest {
 	public void testSetGetDisplayName() {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
-		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
-		String expDisplayName = "Add Resource";
-		assertEquals(expDisplayName, myRp.getDisplayName());
-		expDisplayName = "Add";
-		myRp.setDisplayName(expDisplayName);
-		String actName = myRp.getDisplayName();
-		assertEquals(expDisplayName, actName);
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertEquals(expName, myRpp.getDisplayName());
+		expName = "alu";
+		myRpp.setDisplayName(expName);
+		String actName = myRpp.getDisplayName();
+		assertEquals(expName, actName);
 	}
 
 	@Test
 	public void testSetGetType() {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
-		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
 		Class expType = String.class;
-		assertEquals(expType, myRp.getType());
+		assertEquals(expType, myRpp.getType());
 		expType = Integer.class;
-		myRp.setType(Integer.class);
-		Class actType = myRp.getType();
+		myRpp.setType(Integer.class);
+		Class actType = myRpp.getType();
 		assertEquals(expType, actType);
 	}
 
@@ -140,17 +141,21 @@ public class ResourcesPropertyTest {
 	public void testIsEditable() {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
-		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
-		assertTrue(myRp.isEditable());
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertTrue(myRpp.isEditable());
 	}
 
 	@Test
 	public void testSetEditable() {
 		PreemptiveTransitionFeature myPree = new PreemptiveTransitionFeature(mockedApp);
 		assertNotNull(myPree);
-		ResourcesProperty myRp = (ResourcesProperty) myPree.getProperties().get(0);
-		assertTrue(myRp.isEditable());
-		myRp.setEditable(false);
-		assertFalse(myRp.isEditable());
+		String expName = "cpu";
+		ResourcePriorityProperty myRpp = myPree.new ResourcePriorityProperty(expName);
+		assertTrue(myRpp.isEditable());
+		myRpp.setEditable(false);
+		assertFalse(myRpp.isEditable());
 	}
+
+
 }

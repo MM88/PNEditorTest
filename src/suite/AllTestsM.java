@@ -4,6 +4,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import T0_2.PreemptiveTransitionFeatureFactoryTest;
+import T0_2.StochasticTransitionFeatureFactoryTest;
+import T0_2.TimedTransitionFeatureFactoryTest;
+import T0_3.TransitionTest;
+import T0_5_6_7.ElementListDockBarTest;
+import T0_5_6_7.FeaturesDockBarTest;
+import T0_5_6_7.PropertiesDockBarTest;
 import T1.T1_1;
 import T1.T1_2;
 import T1.T1_3;
@@ -14,13 +21,6 @@ import T2.T2_3;
 import T2.T2_4;
 import T2.T2_5;
 
-import dockBarsTest.ElementListDockBarTest;
-import dockBarsTest.FeaturesDockBarTest;
-import dockBarsTest.PropertiesDockBarTest;
-import featureFactoriesTest.PreemptiveTransitionFeatureFactoryTest;
-import featureFactoriesTest.StochasticTransitionFeatureFactoryTest;
-import featureFactoriesTest.TimedTransitionFeatureFactoryTest;
-import featurizableTest.TransitionTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({ ElementListDockBarTest.class, FeaturesDockBarTest.class,
